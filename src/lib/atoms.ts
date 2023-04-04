@@ -70,4 +70,4 @@ export const importErrorAtom = atom<ImportError>({
   errorCode: "",
 });
 
-export const isDesktop = atom(true);
+export const isMobile = atom(true);

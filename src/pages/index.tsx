@@ -10,7 +10,7 @@ import { ParallelPicker } from "~/components/parallelPicker";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   deckAtom,
-  isDesktop,
+  isMobile,
   paragonAtom,
   parallelChoiceAtom,
 } from "~/lib/atoms";
@@ -149,28 +149,8 @@ const Home = (props: HomeProps) => {
   const [parallelChoice, setParallelChoice] = useAtom(parallelChoiceAtom);
   const [activeParagon, setActiveParagon] = useAtom(paragonAtom);
   const setDeck = useSetAtom(deckAtom);
-  const [desktop, setDesktop] = useAtom(isDesktop);
 
   const [openImport, setOpenImport] = useState(false);
-
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth > 768) {
-        setDesktop(true);
-      } else {
-        setDesktop(false);
-      }
-    }
-    // Check if running on the client-side before accessing the window object
-    if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
-
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }
-  }, []);
 
   const twitter = <Icon icon="mdi:twitter" className="h-6 w-6" />;
 

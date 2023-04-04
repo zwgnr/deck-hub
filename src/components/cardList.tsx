@@ -13,7 +13,7 @@ import FilterPanel from "./FilterPanel";
 import {
   deckAtom,
   deckErrorAtom,
-  isDesktop,
+  isMobile,
   paragonAtom,
   parallelChoiceAtom,
   showDetailsAtom,
@@ -39,27 +39,30 @@ export const CardList = (props: CardListProps) => {
   const hoverEnabled = useAtomValue(showDetailsAtom);
   const activeParagon = useAtomValue(paragonAtom);
   const [deckError, setDeckError] = useAtom(deckErrorAtom);
-  const [desktop, setDesktop] = useAtom(isDesktop);
+  const [mobile, setMobile] = useAtom(isMobile);
 
   const [cardInfo, setCardInfo] = useState(cards[0]);
   const [open, setOpen] = useState<boolean>(false);
   const [visibleCards, setVisibleCards] = useState<never[] | Cards>([]);
 
   useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth > 768) {
-        setDesktop(true);
+    function handleMobile() {
+      if (
+        ("maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) ||
+        window.innerWidth < 768
+      ) {
+        setMobile(true);
       } else {
-        setDesktop(false);
+        setMobile(false);
       }
     }
     // Check if running on the client-side before accessing the window object
     if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
+      handleMobile();
+      window.addEventListener("resize", handleMobile);
 
       return () => {
-        window.removeEventListener("resize", handleResize);
+        window.removeEventListener("resize", handleMobile);
       };
     }
   }, []);
@@ -253,115 +256,7 @@ export const CardList = (props: CardListProps) => {
       </div>
       <div className="flex h-full flex-wrap justify-center gap-2 xl:overflow-y-auto">
         {visibleCards.map((card: any) =>
-          desktop ? (
-            <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
-              <div className="relative h-60 w-40" key={card.tokenId}>
-                {statsEnabled ? (
-                  <>
-                    <div className="absolute right-16 top-0  flex items-center justify-center text-gray-300">
-                      {handleCardType(card.gameData.cardType)}
-                    </div>
-                    <div className=" absolute right-2 top-2  flex items-center justify-center px-1 text-white">
-                      <p>{card.gameData.cost}</p>
-                    </div>
-                  </>
-                ) : null}
-                <HoverCardPrimitive.Trigger asChild>
-                  <button
-                    onMouseEnter={() => [setOpen(true), setCardInfo(card)]}
-                    onMouseLeave={() => setOpen(false)}
-                    onClick={() => addToDeck(card)}
-                    className="h-full w-full"
-                  >
-                    <Image
-                      //src={getImg(card.parallel, card.title, card.slug)}
-                      src={card.media.image}
-                      alt="card"
-                      className={clsx(
-                        getOpacity(card.gameData.parallel),
-                        "h-full w-full rounded-md"
-                      )}
-                      //quality={100}
-                      height={72}
-                      width={200}
-                      //fill
-                      style={{ objectFit: "cover" }}
-                    ></Image>
-                  </button>
-                </HoverCardPrimitive.Trigger>
-                {card.gameData.cardType !== "Unit" ? null : statsEnabled ? (
-                  <>
-                    <div className="absolute bottom-10 left-2 flex items-center justify-center px-1 text-white">
-                      <p>{card.gameData.attack}</p>
-                    </div>
-                    <div className="absolute bottom-10 right-16 flex items-center justify-center px-1  text-gray-200">
-                      {handleCardIcon(card.gameData.functionText)}
-                    </div>
-                    <div className="absolute bottom-10 right-2 flex items-center justify-center px-1  text-white">
-                      <p>{card.gameData.health}</p>
-                    </div>
-                  </>
-                ) : null}
-              </div>
-              {hoverEnabled ? (
-                <HoverCardPrimitive.Content
-                  side="left"
-                  align="center"
-                  sideOffset={2}
-                  className={clsx(
-                    "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[800px]",
-                    " rounded-xl p-4",
-                    " bg-neutral-500 shadow-2xl shadow-black dark:bg-slate-800",
-                    "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
-                  )}
-                >
-                  <HoverCardPrimitive.Arrow className="fill-current text-slate-400 dark:text-slate-800" />
-
-                  <div className="flex h-full w-full space-x-4">
-                    <div className="flex w-1/3 items-center justify-center py-4">
-                      <div className="h-96 w-64 py-2">
-                        <Image
-                          //src={getImg(card.parallel, card.title, card.slug)}
-                          src={cardInfo?.media.image!}
-                          alt="card"
-                          className="h-full w-full rounded-md"
-                          //quality={100}
-                          height={72}
-                          width={200}
-                          //fill
-                          style={{ objectFit: "cover" }}
-                        ></Image>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-4">
-                      <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                        {cardInfo?.name}
-                      </h1>
-                      <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                        {cardInfo?.gameData.cardType}
-                      </h2>
-                      <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
-                        {formatText(cardInfo?.gameData.functionText!)}
-                      </p>
-                      <div>
-                        <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                          Energy Cost: {cardInfo?.gameData.cost}
-                        </p>
-                      </div>
-                      <div className="flex flex-row gap-6">
-                        <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                          Attack: {cardInfo?.gameData.attack}
-                        </p>
-                        <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                          Health: {cardInfo?.gameData.health}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </HoverCardPrimitive.Content>
-              ) : null}
-            </HoverCardPrimitive.Root>
-          ) : (
+          mobile ? (
             <Popover.Root>
               <div className="relative h-60 w-40" key={card.tokenId}>
                 {statsEnabled ? (
@@ -418,7 +313,7 @@ export const CardList = (props: CardListProps) => {
                   sideOffset={2}
                   className={clsx(
                     "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]",
-                    " rounded-xl p-4",
+                    " mx-12 rounded-xl p-4",
                     " bg-neutral-500 shadow-2xl shadow-black dark:bg-slate-800",
                     "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
                   )}
@@ -428,6 +323,114 @@ export const CardList = (props: CardListProps) => {
                   <div className="flex h-full w-full space-x-4">
                     <div className="flex w-1/2 items-center justify-center py-4">
                       <div className="h-72 w-56 py-2">
+                        <Image
+                          //src={getImg(card.parallel, card.title, card.slug)}
+                          src={cardInfo?.media.image!}
+                          alt="card"
+                          className="h-full w-full rounded-md"
+                          //quality={100}
+                          height={72}
+                          width={200}
+                          //fill
+                          style={{ objectFit: "cover" }}
+                        ></Image>
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center gap-4">
+                      <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                        {cardInfo?.name}
+                      </h1>
+                      <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                        {cardInfo?.gameData.cardType}
+                      </h2>
+                      <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                        {formatText(cardInfo?.gameData.functionText!)}
+                      </p>
+                      <div>
+                        <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                          Energy Cost: {cardInfo?.gameData.cost}
+                        </p>
+                      </div>
+                      <div className="flex flex-row gap-6">
+                        <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                          Attack: {cardInfo?.gameData.attack}
+                        </p>
+                        <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                          Health: {cardInfo?.gameData.health}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Popover.Content>
+              ) : null}
+            </Popover.Root>
+          ) : (
+            <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
+              <div className="relative h-60 w-40" key={card.tokenId}>
+                {statsEnabled ? (
+                  <>
+                    <div className="absolute right-16 top-0  flex items-center justify-center text-gray-300">
+                      {handleCardType(card.gameData.cardType)}
+                    </div>
+                    <div className=" absolute right-2 top-2  flex items-center justify-center px-1 text-white">
+                      <p>{card.gameData.cost}</p>
+                    </div>
+                  </>
+                ) : null}
+                <HoverCardPrimitive.Trigger asChild>
+                  <button
+                    onMouseEnter={() => [setOpen(true), setCardInfo(card)]}
+                    onMouseLeave={() => setOpen(false)}
+                    onClick={() => addToDeck(card)}
+                    className="h-full w-full"
+                  >
+                    <Image
+                      //src={getImg(card.parallel, card.title, card.slug)}
+                      src={card.media.image}
+                      alt="card"
+                      className={clsx(
+                        getOpacity(card.gameData.parallel),
+                        "h-full w-full rounded-md"
+                      )}
+                      //quality={100}
+                      height={72}
+                      width={200}
+                      //fill
+                      style={{ objectFit: "cover" }}
+                    ></Image>
+                  </button>
+                </HoverCardPrimitive.Trigger>
+                {card.gameData.cardType !== "Unit" ? null : statsEnabled ? (
+                  <>
+                    <div className="absolute bottom-10 left-2 flex items-center justify-center px-1 text-white">
+                      <p>{card.gameData.attack}</p>
+                    </div>
+                    <div className="absolute bottom-10 right-16 flex items-center justify-center px-1  text-gray-200">
+                      {handleCardIcon(card.gameData.functionText)}
+                    </div>
+                    <div className="absolute bottom-10 right-2 flex items-center justify-center px-1  text-white">
+                      <p>{card.gameData.health}</p>
+                    </div>
+                  </>
+                ) : null}
+              </div>
+              {hoverEnabled ? (
+                <HoverCardPrimitive.Content
+                  side="bottom"
+                  align="center"
+                  sideOffset={2}
+                  className={clsx(
+                    "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[600px]  xl:h-[400px] xl:w-[800px]",
+                    " rounded-xl p-4",
+                    " bg-neutral-500 shadow-2xl shadow-black dark:bg-slate-800",
+                    "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
+                  )}
+                >
+                  <HoverCardPrimitive.Arrow className="fill-current text-slate-400 dark:text-slate-800" />
+
+                  <div className="flex h-full w-full space-x-4">
+                    <div className="flex w-1/3 items-center justify-center py-4">
+                      <div className="h-72 w-56 py-2 xl:h-96 xl:w-64">
                         <Image
                           //src={getImg(card.parallel, card.title, card.slug)}
                           src={cardInfo?.media.image!}
@@ -466,9 +469,9 @@ export const CardList = (props: CardListProps) => {
                       </div>
                     </div>
                   </div>
-                </Popover.Content>
+                </HoverCardPrimitive.Content>
               ) : null}
-            </Popover.Root>
+            </HoverCardPrimitive.Root>
           )
         )}
       </div>

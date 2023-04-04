@@ -22,7 +22,7 @@ import { HoverToggle } from "./interactions/DetailsToggle";
 import {
   deckAtom,
   deckErrorAtom,
-  isDesktop,
+  isMobile,
   paragonAtom,
   parallelChoiceAtom,
   showDetailsAtom,
@@ -47,7 +47,7 @@ export const MyDeck = (props: DeckProps) => {
   const statsEnabled = useAtomValue(showStatsAtom);
   const hoverEnabled = useAtomValue(showDetailsAtom);
   const [deckError, setDeckError] = useAtom(deckErrorAtom);
-  const [desktop, setDesktop] = useAtom(isDesktop);
+  const [mobile, setMobile] = useAtom(isMobile);
 
   const [cardInfo, setCardInfo] = useState(cards[0]);
   const [deckCode, setDeckCode] = useState("");
@@ -56,20 +56,24 @@ export const MyDeck = (props: DeckProps) => {
   const { copyToClipboard } = useCopyToClipboard();
 
   useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth > 768) {
-        setDesktop(true);
+    function handleMobile() {
+      if (
+        ("maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) ||
+        window.innerWidth < 768
+      ) {
+        setMobile(true);
       } else {
-        setDesktop(false);
+        setMobile(false);
       }
     }
+
     // Check if running on the client-side before accessing the window object
     if (typeof window !== "undefined") {
-      handleResize();
-      window.addEventListener("resize", handleResize);
+      handleMobile();
+      window.addEventListener("resize", handleMobile);
 
       return () => {
-        window.removeEventListener("resize", handleResize);
+        window.removeEventListener("resize", handleMobile);
       };
     }
   }, []);
@@ -377,7 +381,6 @@ export const MyDeck = (props: DeckProps) => {
           return <span key={index}>{word} </span>;
         }
       });
-      //console.log(activeParagon?.tokenId)
       return (
         <div className="flex flex-col gap-2 pt-1 pb-4">
           <p>
@@ -464,93 +467,7 @@ export const MyDeck = (props: DeckProps) => {
         </div>
 
         <div className="flex h-56 w-full overflow-hidden  xl:h-2/5">
-          {desktop ? (
-            <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
-              <div className="relative flex h-full w-full">
-                <HoverCardPrimitive.Trigger asChild>
-                  {parallelChoice === "" ? (
-                    <Image
-                      src={"/images/placeholder.png"}
-                      alt="card"
-                      fill
-                      style={{ objectFit: "contain" }}
-                      id="1"
-                    />
-                  ) : (
-                    <Image
-                      src={activeParagon?.media.image!}
-                      alt="Paragon"
-                      fill
-                      style={{ objectFit: "contain" }}
-                      id="1"
-                    />
-                  )}
-                </HoverCardPrimitive.Trigger>
-                {activeParagon.id === "" ? null : hoverEnabled ? (
-                  <HoverCardPrimitive.Content
-                    side="left"
-                    align="center"
-                    sideOffset={2}
-                    className={clsx(
-                      "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[800px]",
-                      " rounded-xl p-4",
-                      "bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800",
-                      "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
-                    )}
-                  >
-                    <HoverCardPrimitive.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
-
-                    <div className="flex h-full w-full space-x-4">
-                      <div className="flex w-1/3 items-center justify-center py-4">
-                        <div className="h-96 w-64 py-2">
-                          <Image
-                            src={activeParagon?.media.image!}
-                            alt="card"
-                            className="h-full w-full rounded-md"
-                            height={72}
-                            width={500}
-                            style={{ objectFit: "cover" }}
-                          ></Image>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-4">
-                        <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                          {activeParagon?.name.slice(
-                            0,
-                            activeParagon?.name.length - 8
-                          )}
-                        </h1>
-                        <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                          {activeParagon?.gameData.cardType}
-                        </h2>
-                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
-                          {formatText(activeParagon?.gameData.functionText!)}
-                        </p>
-                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
-                          {handlePassiveText(
-                            activeParagon?.gameData.passiveAbility!
-                          )}
-                        </p>
-                        <div>
-                          <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                            Energy Cost: {activeParagon?.gameData.cost}
-                          </p>
-                        </div>
-                        <div className="flex flex-row gap-6">
-                          <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                            Attack: {activeParagon?.gameData.attack}
-                          </p>
-                          <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                            Health: {activeParagon?.gameData.health}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </HoverCardPrimitive.Content>
-                ) : null}
-              </div>
-            </HoverCardPrimitive.Root>
-          ) : (
+          {mobile ? (
             <Popover.Root>
               <div className="relative flex h-full w-full">
                 <Popover.Trigger asChild>
@@ -581,7 +498,7 @@ export const MyDeck = (props: DeckProps) => {
                       "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]",
                       " rounded-xl p-4",
                       "bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800",
-                      "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
+                      "focus:outline-none"
                     )}
                   >
                     <Popover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
@@ -636,6 +553,92 @@ export const MyDeck = (props: DeckProps) => {
                 ) : null}
               </div>
             </Popover.Root>
+          ) : (
+            <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
+              <div className="relative flex h-full w-full">
+                <HoverCardPrimitive.Trigger asChild>
+                  {parallelChoice === "" ? (
+                    <Image
+                      src={"/images/placeholder.png"}
+                      alt="card"
+                      fill
+                      style={{ objectFit: "contain" }}
+                      id="1"
+                    />
+                  ) : (
+                    <Image
+                      src={activeParagon?.media.image!}
+                      alt="Paragon"
+                      fill
+                      style={{ objectFit: "contain" }}
+                      id="1"
+                    />
+                  )}
+                </HoverCardPrimitive.Trigger>
+                {activeParagon.id === "" ? null : hoverEnabled ? (
+                  <HoverCardPrimitive.Content
+                    side="bottom"
+                    align="center"
+                    sideOffset={2}
+                    className={clsx(
+                      "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[800px]",
+                      " rounded-xl p-4",
+                      "bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800",
+                      "focus:outline-none focus-visible:ring focus-visible:ring-lime-500 focus-visible:ring-opacity-75"
+                    )}
+                  >
+                    <HoverCardPrimitive.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
+
+                    <div className="flex h-full w-full space-x-4">
+                      <div className="flex w-1/3 items-center justify-center py-4">
+                        <div className="h-96 w-64 py-2">
+                          <Image
+                            src={activeParagon?.media.image!}
+                            alt="card"
+                            className="h-full w-full rounded-md"
+                            height={72}
+                            width={500}
+                            style={{ objectFit: "cover" }}
+                          ></Image>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-4">
+                        <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                          {activeParagon?.name.slice(
+                            0,
+                            activeParagon?.name.length - 8
+                          )}
+                        </h1>
+                        <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                          {activeParagon?.gameData.cardType}
+                        </h2>
+                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                          {formatText(activeParagon?.gameData.functionText!)}
+                        </p>
+                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                          {handlePassiveText(
+                            activeParagon?.gameData.passiveAbility!
+                          )}
+                        </p>
+                        <div>
+                          <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                            Energy Cost: {activeParagon?.gameData.cost}
+                          </p>
+                        </div>
+                        <div className="flex flex-row gap-6">
+                          <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                            Attack: {activeParagon?.gameData.attack}
+                          </p>
+                          <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                            Health: {activeParagon?.gameData.health}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </HoverCardPrimitive.Content>
+                ) : null}
+              </div>
+            </HoverCardPrimitive.Root>
           )}
         </div>
         <div className="flex h-24 w-full flex-col  items-center justify-center  ">
@@ -700,7 +703,122 @@ export const MyDeck = (props: DeckProps) => {
         {deck.length === 0
           ? null
           : sortedCards.map((card, index) =>
-              desktop ? (
+              mobile ? (
+                <Popover.Root>
+                  <div key={index}>
+                    <Popover.Trigger asChild>
+                      <div
+                        onClick={() => [setCardInfo(card)]}
+                        className=" relative flex h-36 w-24 flex-col items-center justify-start rounded-md"
+                      >
+                        <Image
+                          src={card.media.image}
+                          alt="card"
+                          className="  h-24 w-16  rounded-md bg-slate-700 p-0"
+                          fill
+                          style={{ objectFit: "cover" }}
+                        ></Image>
+                        {statsEnabled ? (
+                          <>
+                            <div className="absolute right-8 top-0  flex items-center justify-center text-gray-300">
+                              {handleCardType(card.gameData.cardType)}
+                            </div>
+                            <div className=" absolute right-1 top-1 flex items-center justify-center text-white">
+                              <p>{card.gameData.cost}</p>
+                            </div>
+                          </>
+                        ) : null}
+                        {card.gameData.cardType !==
+                        "Unit" ? null : statsEnabled ? (
+                          <>
+                            <div className="absolute bottom-5 left-1 flex items-center justify-center text-white">
+                              <p>{card.gameData.attack}</p>
+                            </div>
+                            <div className="absolute bottom-6 right-8 flex items-center justify-center  text-gray-200">
+                              {handleCardIcon(card.gameData.functionText)}
+                            </div>
+                            <div className="absolute bottom-5 right-1 flex items-center justify-center   text-white">
+                              <p>{card.gameData.health}</p>
+                            </div>
+                          </>
+                        ) : null}
+                      </div>
+                    </Popover.Trigger>
+                    {hoverEnabled ? (
+                      <Popover.Content
+                        side="bottom"
+                        align="center"
+                        sideOffset={2}
+                        className={clsx(
+                          "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]",
+                          " mx-12 rounded-xl p-2 xl:p-4",
+                          "bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800",
+                          "focus:outline-none"
+                        )}
+                      >
+                        <Popover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
+
+                        <div className="flex h-full w-full space-x-4">
+                          <div className="flex w-full items-center justify-center py-4">
+                            <div className="h-72 w-56 py-2">
+                              <Image
+                                //src={getImg(card.parallel, card.title, card.slug)}
+                                src={cardInfo?.media.image!}
+                                alt="card"
+                                className="h-full w-full rounded-md"
+                                //quality={100}
+                                height={72}
+                                width={400}
+                                //fill
+                                style={{ objectFit: "cover" }}
+                              ></Image>
+                            </div>
+                          </div>
+                          <div className="flex flex-col justify-center gap-4">
+                            <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                              {cardInfo?.name}
+                            </h1>
+                            <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                              {cardInfo?.gameData.cardType}
+                            </h2>
+                            <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                              {formatText(cardInfo?.gameData.functionText!)}
+                            </p>
+                            <div>
+                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                                Energy Cost: {cardInfo?.gameData.cost}
+                              </p>
+                            </div>
+                            <div className="flex flex-row gap-6">
+                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                                Attack: {cardInfo?.gameData.attack}
+                              </p>
+                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                                Health: {cardInfo?.gameData.health}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </Popover.Content>
+                    ) : null}
+
+                    <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
+                      <button onClick={() => removeOne(index)}>
+                        <Icon
+                          icon="mdi:minus-box"
+                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
+                        />
+                      </button>
+                      <button onClick={() => addOne(card)}>
+                        <Icon
+                          icon="material-symbols:add-box"
+                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </Popover.Root>
+              ) : (
                 <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
                   <div key={index}>
                     <HoverCardPrimitive.Trigger asChild>
@@ -743,21 +861,21 @@ export const MyDeck = (props: DeckProps) => {
                     </HoverCardPrimitive.Trigger>
                     {hoverEnabled ? (
                       <HoverCardPrimitive.Content
-                        side="left"
+                        side="bottom"
                         align="center"
                         sideOffset={2}
                         className={clsx(
-                          "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[800px]",
+                          "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[700px]  xl:h-[400px] xl:w-[800px]",
                           " rounded-xl p-4",
                           "bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800",
-                          "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
+                          "focus:outline-none"
                         )}
                       >
                         <HoverCardPrimitive.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
 
                         <div className="flex h-full w-full space-x-4">
                           <div className="flex w-1/3 items-center justify-center py-4">
-                            <div className="h-96 w-64 py-2">
+                            <div className="h-72 w-56 py-2 xl:h-96 xl:w-64">
                               <Image
                                 //src={getImg(card.parallel, card.title, card.slug)}
                                 src={cardInfo?.media.image!}
@@ -815,121 +933,6 @@ export const MyDeck = (props: DeckProps) => {
                     </div>
                   </div>
                 </HoverCardPrimitive.Root>
-              ) : (
-                <Popover.Root>
-                  <div key={index}>
-                    <Popover.Trigger asChild>
-                      <div
-                        onClick={() => [setCardInfo(card)]}
-                        className=" relative flex h-36 w-24 flex-col items-center justify-start rounded-md"
-                      >
-                        <Image
-                          src={card.media.image}
-                          alt="card"
-                          className="  h-24 w-16  rounded-md bg-slate-700 p-0"
-                          fill
-                          style={{ objectFit: "cover" }}
-                        ></Image>
-                        {statsEnabled ? (
-                          <>
-                            <div className="absolute right-8 top-0  flex items-center justify-center text-gray-300">
-                              {handleCardType(card.gameData.cardType)}
-                            </div>
-                            <div className=" absolute right-1 top-1 flex items-center justify-center text-white">
-                              <p>{card.gameData.cost}</p>
-                            </div>
-                          </>
-                        ) : null}
-                        {card.gameData.cardType !==
-                        "Unit" ? null : statsEnabled ? (
-                          <>
-                            <div className="absolute bottom-5 left-1 flex items-center justify-center text-white">
-                              <p>{card.gameData.attack}</p>
-                            </div>
-                            <div className="absolute bottom-6 right-8 flex items-center justify-center  text-gray-200">
-                              {handleCardIcon(card.gameData.functionText)}
-                            </div>
-                            <div className="absolute bottom-5 right-1 flex items-center justify-center   text-white">
-                              <p>{card.gameData.health}</p>
-                            </div>
-                          </>
-                        ) : null}
-                      </div>
-                    </Popover.Trigger>
-                    {hoverEnabled ? (
-                      <Popover.Content
-                        side="bottom"
-                        align="center"
-                        sideOffset={2}
-                        className={clsx(
-                          "radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]",
-                          " rounded-xl p-4",
-                          "bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800",
-                          "focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75"
-                        )}
-                      >
-                        <Popover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
-
-                        <div className="flex h-full w-full space-x-4">
-                          <div className="flex w-full items-center justify-center py-4">
-                            <div className="h-72 w-56 py-2">
-                              <Image
-                                //src={getImg(card.parallel, card.title, card.slug)}
-                                src={cardInfo?.media.image!}
-                                alt="card"
-                                className="h-full w-full rounded-md"
-                                //quality={100}
-                                height={72}
-                                width={400}
-                                //fill
-                                style={{ objectFit: "cover" }}
-                              ></Image>
-                            </div>
-                          </div>
-                          <div className="flex flex-col gap-4">
-                            <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                              {cardInfo?.name}
-                            </h1>
-                            <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                              {cardInfo?.gameData.cardType}
-                            </h2>
-                            <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
-                              {formatText(cardInfo?.gameData.functionText!)}
-                            </p>
-                            <div>
-                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                                Energy Cost: {cardInfo?.gameData.cost}
-                              </p>
-                            </div>
-                            <div className="flex flex-row gap-6">
-                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                                Attack: {cardInfo?.gameData.attack}
-                              </p>
-                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                                Health: {cardInfo?.gameData.health}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </Popover.Content>
-                    ) : null}
-
-                    <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
-                      <button onClick={() => removeOne(index)}>
-                        <Icon
-                          icon="mdi:minus-box"
-                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
-                        />
-                      </button>
-                      <button onClick={() => addOne(card)}>
-                        <Icon
-                          icon="material-symbols:add-box"
-                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </Popover.Root>
               )
             )}
         {placeHolderCards.map((card, index) => (
