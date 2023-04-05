@@ -1,32 +1,32 @@
-import { atom } from "jotai";
-import { atomWithStorage, RESET } from "jotai/utils";
+import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
-export const parallelChoiceAtom = atomWithStorage("parallelChoice", "");
+export const parallelChoiceAtom = atomWithStorage('parallelChoice', '');
 
 export const showStatsAtom = atom(false);
 
 export const showDetailsAtom = atom(true);
 
-export const paragonAtom = atomWithStorage("activeParagon", {
-  tokenId: "",
-  name: "",
+export const paragonAtom = atomWithStorage('activeParagon', {
+  tokenId: '',
+  name: '',
   media: {
-    image: "",
-    thumbSm: "",
-    thumbLg: "",
+    image: '',
+    thumbSm: '',
+    thumbLg: '',
   },
   gameData: {
-    parallel: "",
-    rarity: "",
-    cost: "",
-    attack: "",
-    health: "",
-    cardType: "",
-    subtype: "",
-    functionText: "",
-    passiveAbility: "",
+    parallel: '',
+    rarity: '',
+    cost: '',
+    attack: '',
+    health: '',
+    cardType: '',
+    subtype: '',
+    functionText: '',
+    passiveAbility: '',
   },
-  id: "",
+  id: '',
 });
 
 type DeckCard = {
@@ -52,14 +52,14 @@ type DeckCard = {
   id: string;
 };
 
-export const deckAtom = atomWithStorage<DeckCard[]>("deck", []);
+export const deckAtom = atomWithStorage<DeckCard[]>('deck', []);
 
 interface DeckError {
   errorCode: string;
 }
 
 export const deckErrorAtom = atom<DeckError>({
-  errorCode: ""
+  errorCode: '',
 });
 
 interface ImportError {
@@ -67,7 +67,7 @@ interface ImportError {
 }
 
 export const importErrorAtom = atom<ImportError>({
-  errorCode: "",
+  errorCode: '',
 });
 
 export const isMobile = atom(true);

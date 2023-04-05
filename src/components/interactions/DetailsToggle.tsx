@@ -1,7 +1,7 @@
-import { Switch } from "@headlessui/react";
-import clsx from "clsx";
-import { useAtom } from "jotai";
-import { showDetailsAtom } from "~/lib/atoms";
+import { Switch } from '@headlessui/react';
+import clsx from 'clsx';
+import { useAtom } from 'jotai';
+import { showDetailsAtom } from '~/lib/atoms';
 
 export const HoverToggle = () => {
   const [hoverEnabled, setHoverEnabled] = useAtom(showDetailsAtom);
@@ -20,16 +20,16 @@ export const HoverToggle = () => {
         checked={hoverEnabled}
         onChange={setHoverEnabled}
         className={clsx(
-          hoverEnabled ? "bg-lime-400" : "bg-neutral-300 dark:bg-neutral-600",
-          "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out"
+          hoverEnabled ? 'bg-lime-400' : 'bg-neutral-300 dark:bg-neutral-600',
+          'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out',
         )}
       >
-        <span className="sr-only">Enable Hcver Cards</span>
+        <span className="sr-only">Enable Hover Cards</span>
         <span
           aria-hidden="true"
           className={clsx(
-            hoverEnabled ? "translate-x-6" : "translate-x-1",
-            "pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+            hoverEnabled ? 'translate-x-6' : 'translate-x-1',
+            'pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out',
           )}
         />
       </Switch>

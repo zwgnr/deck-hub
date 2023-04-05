@@ -45,23 +45,23 @@ export type Cards = {
 }[];
 
 export type Paragons = {
-    tokenId: string;
-    name: string;
-    media: {
-      image: string;
-      thumbSm: string;
-      thumbLg: string;
-    };
-    gameData: {
-      parallel: string;
-      rarity: string;
-      cost: string;
-      attack: string;
-      health: string;
-      cardType: string;
-      subtype: string;
-      functionText: string;
-      passiveAbility: string;
-    };
-    id: string;
-  }[];
+  tokenId: string;
+  name: string;
+  media: {
+    image: string;
+    thumbSm: string;
+    thumbLg: string;
+  };
+  gameData: {
+    parallel: string;
+    rarity: string;
+    cost: string;
+    attack: string;
+    health: string;
+    cardType: string;
+    subtype: string;
+    functionText: string;
+    passiveAbility: string;
+  };
+  id: string;
+}[];
