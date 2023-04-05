@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import * as Popover from '@radix-ui/react-popover';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 import type { Card, Cards, Paragons } from '~/types/sharedTypes';
@@ -57,7 +57,6 @@ export const MyDeck = (props: DeckProps) => {
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
   const { copyToClipboard } = useCopyToClipboard();
-  console.log(deck);
 
   useEffect(() => {
     function handleMobile() {
@@ -389,7 +388,7 @@ export const MyDeck = (props: DeckProps) => {
         if (word.match(pattern)) {
           const formattedWord = word.replace(/\*/g, ''); // Remove asterisks
           return (
-            <span key={uuid()} className="italic text-lime-400">
+            <span key={uuidv4()} className="italic text-lime-400">
               {formattedWord}{' '}
             </span>
           );
@@ -397,12 +396,12 @@ export const MyDeck = (props: DeckProps) => {
         if (word === '*' && arr[index - 1] !== '*' && arr[index + 1] !== '*') {
           return (
             <>
-              <br key={uuid()} />
-              <br key={uuid()} />
+              <br key={uuidv4()} />
+              <br key={uuidv4()} />
             </>
           ); // Replace single asterisk with a <br> tag
         }
-        return <span key={uuid()}>{word} </span>;
+        return <span key={uuidv4()}>{word} </span>;
       });
       return (
         <div className="flex flex-col gap-2 pt-1 pb-4">
@@ -690,7 +689,7 @@ export const MyDeck = (props: DeckProps) => {
           : sortedCards.map((card, index) =>
               mobile ? (
                 <Popover.Root>
-                  <div key={uuid()}>
+                  <div key={uuidv4()}>
                     <Popover.Trigger asChild>
                       <div
                         role="button"
@@ -916,7 +915,7 @@ export const MyDeck = (props: DeckProps) => {
               ),
             )}
         {placeHolderCards.map(() => (
-          <div key={uuid()}>
+          <div key={uuidv4()}>
             <div className=" relative flex h-36 w-24 flex-col items-center justify-start rounded-md bg-slate-800 ">
               <Image
                 src="/images/placeholder.png"

@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 export const formatText = (text: string) => {
   const modifiedString = text?.replace(/\n/g, ' ');
@@ -11,7 +11,7 @@ export const formatText = (text: string) => {
       if (word.match(pattern)) {
         const formattedWord = word.replace(/\*/g, ''); // Remove asterisks
         return (
-          <span key={uuid()} className="italic text-lime-400">
+          <span key={uuidv4()} className="italic text-lime-400">
             {formattedWord}{' '}
           </span>
         ); //
@@ -19,12 +19,12 @@ export const formatText = (text: string) => {
       if (word === '*' && arr[index - 1] !== '*' && arr[index + 1] !== '*') {
         return (
           <>
-            <br key={uuid()} />
-            <br key={uuid()} />
+            <br key={uuidv4()} />
+            <br key={uuidv4()} />
           </>
         ); // Replace single asterisk with a <br> tag
       }
-      return <span key={uuid()}>{word} </span>;
+      return <span key={uuidv4()}>{word} </span>;
     });
 
     return (

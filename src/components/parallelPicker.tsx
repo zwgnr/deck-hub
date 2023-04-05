@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { parallelChoiceAtom } from '~/lib/atoms';
 import { useSetAtom } from 'jotai';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 
 export const parallels = [
   {
@@ -49,7 +49,7 @@ export const ParallelPicker = () => {
       <div className="flex h-4/5 w-full flex-row flex-wrap items-center justify-center gap-8">
         {parallels.map((faction) => (
           <button
-            key={uuid()}
+            key={uuidv4()}
             type="button"
             onClick={() => setParallelChoice(faction.name)}
             className={clsx(
