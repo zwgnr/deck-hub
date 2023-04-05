@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
@@ -395,17 +394,16 @@ export const MyDeck = (props: DeckProps) => {
         }
         if (word === '*' && arr[index - 1] !== '*' && arr[index + 1] !== '*') {
           return (
-            <>
-              <br key={uuidv4()} />
-              <br key={uuidv4()} />
-            </>
+            <div key={uuidv4()}>
+              <br />
+            </div>
           ); // Replace single asterisk with a <br> tag
         }
         return <span key={uuidv4()}>{word} </span>;
       });
       return (
         <div className="flex flex-col gap-2 pt-1 pb-4">
-          <p>
+          <div>
             {tag === 'Muster:' && (
               <span className="text-md mr-1 w-fit rounded-md bg-slate-800 p-1 font-bold">
                 {tag}
@@ -415,7 +413,7 @@ export const MyDeck = (props: DeckProps) => {
               <span className="italic text-lime-400">{tag} </span>
             )}
             {formatted}
-          </p>
+          </div>
         </div>
       );
     }
@@ -448,11 +446,12 @@ export const MyDeck = (props: DeckProps) => {
                 <Popover.Trigger asChild>
                   {parallelChoice === '' ? (
                     <Image
-                      src={'/images/placeholder.png'}
+                      src={'/images/paragonPlaceholder.png'}
                       alt="card"
                       fill
                       style={{ objectFit: 'contain' }}
                       id="1"
+                      sizes="50vw"
                     />
                   ) : (
                     <Image
@@ -461,6 +460,7 @@ export const MyDeck = (props: DeckProps) => {
                       fill
                       style={{ objectFit: 'contain' }}
                       id="1"
+                      sizes="50vw"
                     />
                   )}
                 </Popover.Trigger>
@@ -500,12 +500,12 @@ export const MyDeck = (props: DeckProps) => {
                         <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                           {activeParagon?.gameData.cardType}
                         </h2>
-                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                        <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                           {formatText(activeParagon?.gameData.functionText ?? '')}
-                        </p>
-                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                        </div>
+                        <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                           {handlePassiveText(activeParagon?.gameData.passiveAbility ?? '')}
-                        </p>
+                        </div>
                         <div>
                           <p className="text-md font-medium text-gray-100 dark:text-gray-100">
                             Energy Cost: {activeParagon?.gameData.cost}
@@ -528,14 +528,15 @@ export const MyDeck = (props: DeckProps) => {
           ) : (
             <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
               <div className="relative flex h-full w-full">
-                <HoverCardPrimitive.Trigger asChild>
+                <HoverCardPrimitive.Trigger asChild className="relative">
                   {parallelChoice === '' ? (
                     <Image
-                      src="/images/placeholder.png"
+                      src="/images/paragonPlaceholder.png"
                       alt="card"
                       fill
                       style={{ objectFit: 'contain' }}
                       id="1"
+                      sizes="50vw"
                     />
                   ) : (
                     <Image
@@ -544,6 +545,7 @@ export const MyDeck = (props: DeckProps) => {
                       fill
                       style={{ objectFit: 'contain' }}
                       id="1"
+                      sizes="50vw"
                     />
                   )}
                 </HoverCardPrimitive.Trigger>
@@ -583,12 +585,12 @@ export const MyDeck = (props: DeckProps) => {
                         <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                           {activeParagon?.gameData.cardType}
                         </h2>
-                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                        <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                           {formatText(activeParagon?.gameData.functionText ?? '')}
-                        </p>
-                        <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                        </div>
+                        <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                           {handlePassiveText(activeParagon?.gameData.passiveAbility ?? '')}
-                        </p>
+                        </div>
                         <div>
                           <p className="text-md font-medium text-gray-100 dark:text-gray-100">
                             Energy Cost: {activeParagon?.gameData.cost}
@@ -688,8 +690,8 @@ export const MyDeck = (props: DeckProps) => {
           ? null
           : sortedCards.map((card, index) =>
               mobile ? (
-                <Popover.Root>
-                  <div key={uuidv4()}>
+                <Popover.Root key={index}>
+                  <div>
                     <Popover.Trigger asChild>
                       <div
                         role="button"
@@ -703,6 +705,7 @@ export const MyDeck = (props: DeckProps) => {
                           alt="card"
                           className="  h-24 w-16  rounded-md bg-slate-700 p-0"
                           fill
+                          sizes="50vw"
                           style={{ objectFit: 'cover' }}
                         />
                         {statsEnabled ? (
@@ -764,9 +767,9 @@ export const MyDeck = (props: DeckProps) => {
                             <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                               {cardInfo?.gameData.cardType}
                             </h2>
-                            <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                            <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                               {formatText(cardInfo?.gameData.functionText ?? '')}
-                            </p>
+                            </div>
                             <div>
                               <p className="text-md font-medium text-gray-100 dark:text-gray-100">
                                 Energy Cost: {cardInfo?.gameData.cost}
@@ -802,8 +805,8 @@ export const MyDeck = (props: DeckProps) => {
                   </div>
                 </Popover.Root>
               ) : (
-                <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
-                  <div key={card.tokenId}>
+                <HoverCardPrimitive.Root openDelay={0} closeDelay={0} key={index}>
+                  <div>
                     <HoverCardPrimitive.Trigger asChild>
                       <div
                         onMouseEnter={() => [setCardInfo(card)]}
@@ -814,6 +817,7 @@ export const MyDeck = (props: DeckProps) => {
                           alt="card"
                           className="  h-24 w-16  rounded-md bg-slate-700 p-0"
                           fill
+                          sizes="50vw"
                           style={{ objectFit: 'cover' }}
                         />
                         {statsEnabled ? (
@@ -875,9 +879,9 @@ export const MyDeck = (props: DeckProps) => {
                             <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                               {cardInfo?.gameData.cardType}
                             </h2>
-                            <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                            <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                               {formatText(cardInfo?.gameData.functionText ?? '')}
-                            </p>
+                            </div>
                             <div>
                               <p className="text-md font-medium text-gray-100 dark:text-gray-100">
                                 Energy Cost: {cardInfo?.gameData.cost}
@@ -914,14 +918,15 @@ export const MyDeck = (props: DeckProps) => {
                 </HoverCardPrimitive.Root>
               ),
             )}
-        {placeHolderCards.map(() => (
-          <div key={uuidv4()}>
-            <div className=" relative flex h-36 w-24 flex-col items-center justify-start rounded-md bg-slate-800 ">
+        {placeHolderCards.map((index) => (
+          <div key={index}>
+            <div className="relative flex h-36 w-24 flex-col items-center justify-start rounded-md bg-slate-800 ">
               <Image
                 src="/images/placeholder.png"
                 alt="Placeholder Card"
-                className="  h-24 w-16  rounded-md bg-slate-700 p-0"
+                className="rounded-md"
                 fill
+                sizes="10vh"
                 style={{ objectFit: 'cover', objectPosition: 'top' }}
               />
             </div>

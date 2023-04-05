@@ -243,10 +243,10 @@ export const CardList = (props: CardListProps) => {
         <FilterPanel cards={cards} setVisibleCards={setVisibleCards} />
       </div>
       <div className="flex h-full flex-wrap justify-center gap-2 xl:overflow-y-auto">
-        {visibleCards.map((card: Card) =>
+        {visibleCards.map((card: Card, index) =>
           mobile ? (
-            <Popover.Root>
-              <div className="relative h-60 w-40" key={card.tokenId}>
+            <Popover.Root key={index}>
+              <div className="relative h-60 w-40">
                 {statsEnabled ? (
                   <>
                     <div className="absolute right-16 top-0  flex items-center justify-center text-gray-300">
@@ -330,9 +330,9 @@ export const CardList = (props: CardListProps) => {
                       <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                         {cardInfo?.gameData.cardType}
                       </h2>
-                      <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                      <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                         {formatText(cardInfo?.gameData.functionText ?? '')}
-                      </p>
+                      </div>
                       <div>
                         <p className="text-md font-medium text-gray-100 dark:text-gray-100">
                           Energy Cost: {cardInfo?.gameData.cost}
@@ -352,8 +352,8 @@ export const CardList = (props: CardListProps) => {
               ) : null}
             </Popover.Root>
           ) : (
-            <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
-              <div className="relative h-60 w-40" key={card.tokenId}>
+            <HoverCardPrimitive.Root openDelay={0} closeDelay={0} key={index}>
+              <div className="relative h-60 w-40">
                 {statsEnabled ? (
                   <>
                     <div className="absolute right-16 top-0  flex items-center justify-center text-gray-300">
@@ -439,9 +439,9 @@ export const CardList = (props: CardListProps) => {
                       <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                         {cardInfo?.gameData.cardType}
                       </h2>
-                      <p className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
+                      <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                         {formatText(cardInfo?.gameData.functionText ?? '')}
-                      </p>
+                      </div>
                       <div>
                         <p className="text-md font-medium text-gray-100 dark:text-gray-100">
                           Energy Cost: {cardInfo?.gameData.cost}

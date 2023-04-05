@@ -13,7 +13,6 @@ export const ImportErrorMessage = () => {
   useEffect(() => {
     const hasError = importError.errorCode !== '';
     hasError === true ? setShowAlert(true) : setShowAlert(false);
-    console.log(hasError);
   }, [importError]);
 
   let errorMessage;
