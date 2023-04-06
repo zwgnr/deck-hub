@@ -480,12 +480,12 @@ export const MyDeck = (props: DeckProps) => {
 
                     <div className="flex h-full w-full space-x-4">
                       <div className="flex flex-col gap-4">
-                        <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                        <h1 className="text-2xl font-bold text-gray-100 dark:text-gray-100">
                           {activeParagon?.name
                             ? activeParagon.name.substring(0, activeParagon.name.length - 8)
                             : ''}
                         </h1>
-                        <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                        <h2 className="text-xl font-medium text-gray-900 dark:text-gray-500">
                           {activeParagon?.gameData.cardType}
                         </h2>
                         <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
@@ -543,7 +543,7 @@ export const MyDeck = (props: DeckProps) => {
                     align="center"
                     sideOffset={2}
                     className={clsx(
-                      'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[800px]',
+                      'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[600px]',
                       ' rounded-xl p-4',
                       'bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800',
                       'focus:outline-none focus-visible:ring focus-visible:ring-lime-500 focus-visible:ring-opacity-75',
@@ -552,7 +552,7 @@ export const MyDeck = (props: DeckProps) => {
                     <HoverCardPrimitive.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
 
                     <div className="flex h-full w-full space-x-4">
-                      <div className="flex w-1/3 items-center justify-center py-4">
+                      <div className="flex w-1/2 items-center justify-center py-4">
                         <div className="h-96 w-64 py-2">
                           <Image
                             src={activeParagon?.media.image ?? ''}
@@ -565,7 +565,7 @@ export const MyDeck = (props: DeckProps) => {
                         </div>
                       </div>
                       <div className="flex flex-col gap-4">
-                        <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                        <h1 className="text-3xl font-bold text-gray-100 dark:text-gray-100">
                           {activeParagon?.name
                             ? activeParagon.name.substring(0, activeParagon.name.length - 8)
                             : ''}
@@ -737,10 +737,10 @@ export const MyDeck = (props: DeckProps) => {
 
                         <div className="flex h-full w-full space-x-4">
                           <div className="flex flex-col justify-center gap-4">
-                            <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                            <h1 className="text-2xl font-bold text-gray-100 dark:text-gray-100">
                               {cardInfo?.name}
                             </h1>
-                            <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
+                            <h2 className="text-xl font-medium text-gray-900 dark:text-gray-500">
                               {cardInfo?.gameData.cardType}
                             </h2>
                             <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
@@ -827,7 +827,7 @@ export const MyDeck = (props: DeckProps) => {
                         align="center"
                         sideOffset={2}
                         className={clsx(
-                          'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[700px]  xl:h-[400px] xl:w-[800px]',
+                          'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[700px]  xl:h-[400px] xl:w-[600px]',
                           ' rounded-xl p-4',
                           'bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800',
                           'focus:outline-none',
@@ -836,7 +836,7 @@ export const MyDeck = (props: DeckProps) => {
                         <HoverCardPrimitive.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
 
                         <div className="flex h-full w-full space-x-4">
-                          <div className="flex w-1/3 items-center justify-center py-4">
+                          <div className="flex w-1/2 items-center justify-center py-4">
                             <div className="h-72 w-56 py-2 xl:h-96 xl:w-64">
                               <Image
                                 src={cardInfo?.media.image ?? ''}
@@ -848,28 +848,32 @@ export const MyDeck = (props: DeckProps) => {
                               />
                             </div>
                           </div>
-                          <div className="flex flex-col gap-4">
-                            <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                              {cardInfo?.name}
-                            </h1>
-                            <h2 className="text-xl font-medium text-gray-100 dark:text-gray-100">
-                              {cardInfo?.gameData.cardType}
-                            </h2>
+                          <div className="flex h-full flex-col justify-between py-4">
+                            <div className="flex flex-col gap-2">
+                              <h1 className="text-3xl font-bold text-gray-100 dark:text-gray-100">
+                                {cardInfo?.name}
+                              </h1>
+                              <h2 className="mb-4 text-xl font-medium text-gray-900 dark:text-gray-500">
+                                {cardInfo?.gameData.cardType}
+                              </h2>
+                            </div>
                             <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
                               {formatText(cardInfo?.gameData.functionText ?? '')}
                             </div>
-                            <div>
-                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                                Energy Cost: {cardInfo?.gameData.cost}
-                              </p>
-                            </div>
-                            <div className="flex flex-row gap-6">
-                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                                Attack: {cardInfo?.gameData.attack}
-                              </p>
-                              <p className="text-md font-medium text-gray-100 dark:text-gray-100">
-                                Health: {cardInfo?.gameData.health}
-                              </p>
+                            <div className=" flex flex-col gap-2">
+                              <div>
+                                <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                                  Energy Cost: {cardInfo?.gameData.cost}
+                                </p>
+                              </div>
+                              <div className="flex flex-row gap-6">
+                                <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                                  Attack: {cardInfo?.gameData.attack}
+                                </p>
+                                <p className="text-md font-medium text-gray-100 dark:text-gray-100">
+                                  Health: {cardInfo?.gameData.health}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
