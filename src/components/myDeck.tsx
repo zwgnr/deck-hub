@@ -662,7 +662,7 @@ export const MyDeck = (props: DeckProps) => {
               onClick={() => setDeck([])}
               className="rounded-md bg-neutral-300 p-2 hover:bg-neutral-400 dark:bg-neutral-600 dark:text-gray-300 dark:hover:bg-neutral-500"
             >
-              <Icon icon="radix-icons:reset" className="h-6 w-6" />
+              <Icon icon="ic:outline-layers-clear" className="h-6 w-6" />
             </button>{' '}
             <button
               type="button"

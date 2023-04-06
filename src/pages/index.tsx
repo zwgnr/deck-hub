@@ -293,7 +293,7 @@ export const Home = (props: HomeProps) => {
             <button
               onClick={() => setOpenImport(true)}
               title="Import Deck"
-              className="rounded-lg bg-neutral-400 p-2 text-black sm:block"
+              className="rounded-lg bg-neutral-300 p-2 text-black hover:bg-neutral-400 dark:bg-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-500 sm:block "
               type="button"
             >
               <Icon icon="tabler:package-import" className="h-6 w-6" />
@@ -301,10 +301,10 @@ export const Home = (props: HomeProps) => {
             <button
               onClick={handleStartOver}
               title="Start Over"
-              className="rounded-lg bg-neutral-400 p-2 text-black sm:block"
+              className="rounded-lg bg-neutral-300 p-2 text-black hover:bg-neutral-400 dark:bg-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-500 sm:block"
               type="button"
             >
-              <Icon icon="material-symbols:device-reset" className="h-6 w-6" />
+              <Icon icon="material-symbols:restart-alt" className="h-6 w-6" />
             </button>
             <button
               type="button"
