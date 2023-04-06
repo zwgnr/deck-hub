@@ -246,7 +246,7 @@ export const CardList = (props: CardListProps) => {
         {visibleCards.map((card: Card, index) =>
           mobile ? (
             <Popover.Root key={index}>
-              <div className="relative h-60 w-40">
+              <div className="relative h-36 w-24">
                 {statsEnabled ? (
                   <>
                     <div className="absolute right-16 top-0  flex items-center justify-center text-gray-300">
@@ -272,9 +272,9 @@ export const CardList = (props: CardListProps) => {
                         'h-full w-full rounded-md',
                       )}
                       // quality={100}
-                      height={72}
-                      width={200}
-                      // fill
+                      //height={72}
+                      //width={200}
+                      fill
                       style={{ objectFit: 'cover' }}
                     />
                   </button>
@@ -299,8 +299,8 @@ export const CardList = (props: CardListProps) => {
                   align="center"
                   sideOffset={2}
                   className={clsx(
-                    'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]',
-                    ' mx-12 rounded-xl p-4',
+                    'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[400px]',
+                    ' mx-12 rounded-xl p-8',
                     ' bg-neutral-500 shadow-2xl shadow-black dark:bg-slate-800',
                     'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75',
                   )}
@@ -308,21 +308,6 @@ export const CardList = (props: CardListProps) => {
                   <Popover.Arrow className="fill-current text-slate-400 dark:text-slate-800" />
 
                   <div className="flex h-full w-full space-x-4">
-                    <div className="flex w-1/2 items-center justify-center py-4">
-                      <div className="h-72 w-56 py-2">
-                        <Image
-                          // src={getImg(card.parallel, card.title, card.slug)}
-                          src={cardInfo?.media.image ?? ''}
-                          alt="card"
-                          className="h-full w-full rounded-md"
-                          // quality={100}
-                          height={72}
-                          width={200}
-                          // fill
-                          style={{ objectFit: 'cover' }}
-                        />
-                      </div>
-                    </div>
                     <div className="flex flex-col justify-center gap-4">
                       <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                         {cardInfo?.name}

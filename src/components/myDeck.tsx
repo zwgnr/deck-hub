@@ -471,7 +471,7 @@ export const MyDeck = (props: DeckProps) => {
                     sideOffset={2}
                     className={clsx(
                       'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]',
-                      'rounded-xl p-4',
+                      'rounded-xl p-8',
                       'bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800',
                       'focus:outline-none',
                     )}
@@ -479,18 +479,6 @@ export const MyDeck = (props: DeckProps) => {
                     <Popover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
 
                     <div className="flex h-full w-full space-x-4">
-                      <div className="flex w-1/2 items-center justify-center py-4">
-                        <div className="h-72 w-56 py-2">
-                          <Image
-                            src={activeParagon?.media.image ?? ''}
-                            alt="card"
-                            className="h-full w-full rounded-md"
-                            height={72}
-                            width={500}
-                            style={{ objectFit: 'cover' }}
-                          />
-                        </div>
-                      </div>
                       <div className="flex flex-col gap-4">
                         <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                           {activeParagon?.name
@@ -651,7 +639,7 @@ export const MyDeck = (props: DeckProps) => {
       </div>
       <div className="flex h-fit w-full flex-wrap items-center justify-center gap-2 overflow-y-auto xl:h-full xl:w-4/6">
         <div className="flex w-full items-center justify-between px-4 pb-4">
-          <div className="flex flex-row gap-2 ">
+          <div className="mr-4 flex flex-row gap-2 xl:mr-0">
             <StatsToggle />
             <HoverToggle />
           </div>
@@ -739,8 +727,8 @@ export const MyDeck = (props: DeckProps) => {
                         align="center"
                         sideOffset={2}
                         className={clsx(
-                          'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]',
-                          ' mx-12 rounded-xl p-2 xl:p-4',
+                          'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[400px] p-8',
+                          ' mx-12 rounded-xl',
                           'bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800',
                           'focus:outline-none',
                         )}
@@ -748,18 +736,6 @@ export const MyDeck = (props: DeckProps) => {
                         <Popover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
 
                         <div className="flex h-full w-full space-x-4">
-                          <div className="flex w-full items-center justify-center py-4">
-                            <div className="h-72 w-56 py-2">
-                              <Image
-                                src={cardInfo?.media.image ?? ''}
-                                alt="card"
-                                className="h-full w-full rounded-md"
-                                height={72}
-                                width={400}
-                                style={{ objectFit: 'cover' }}
-                              />
-                            </div>
-                          </div>
                           <div className="flex flex-col justify-center gap-4">
                             <h1 className="text-xl font-medium text-gray-100 dark:text-gray-100">
                               {cardInfo?.name}

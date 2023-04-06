@@ -7,8 +7,8 @@ import { Icon } from '@iconify/react';
 import { CardList } from '~/components/cardList';
 import { MyDeck } from '~/components/myDeck';
 import { ParallelPicker } from '~/components/parallelPicker';
-import { useAtom, useSetAtom } from 'jotai';
-import { deckAtom, paragonAtom, parallelChoiceAtom } from '~/lib/atoms';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { deckAtom, isMobile, paragonAtom, parallelChoiceAtom } from '~/lib/atoms';
 
 import type { Cards, Paragons } from '~/types/sharedTypes';
 import { DeckImport } from '~/components/DeckImport';
@@ -234,7 +234,7 @@ export const Home = (props: HomeProps) => {
   const [parallelChoice, setParallelChoice] = useAtom(parallelChoiceAtom);
   const setActiveParagon = useSetAtom(paragonAtom);
   const setDeck = useSetAtom(deckAtom);
-
+  const mobile = useAtomValue(isMobile);
   const [openImport, setOpenImport] = useState(false);
 
   const handleStartOver = () => {
@@ -306,13 +306,15 @@ export const Home = (props: HomeProps) => {
             >
               <Icon icon="material-symbols:restart-alt" className="h-6 w-6" />
             </button>
-            <button
-              type="button"
-              disabled
-              className="rounded-lg bg-lime-100 p-2 text-black sm:block"
-            >
-              Connect (soon)
-            </button>
+            {!mobile ? (
+              <button
+                type="button"
+                disabled
+                className="rounded-lg bg-lime-100 p-2 text-black sm:block"
+              >
+                Connect (soon)
+              </button>
+            ) : null}
             <button
               type="button"
               className="rounded-xl p-1 text-gray-400"
