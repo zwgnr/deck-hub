@@ -299,9 +299,9 @@ export const CardList = (props: CardListProps) => {
                   align="center"
                   sideOffset={2}
                   className={clsx(
-                    'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[400px]',
+                    'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[300px]',
                     ' mx-12 rounded-xl p-8',
-                    ' bg-neutral-500 shadow-2xl shadow-black dark:bg-slate-800',
+                    ' bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800',
                     'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75',
                   )}
                 >

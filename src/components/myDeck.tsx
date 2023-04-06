@@ -470,7 +470,7 @@ export const MyDeck = (props: DeckProps) => {
                     align="center"
                     sideOffset={2}
                     className={clsx(
-                      'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[400px]',
+                      'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[400px] w-[300px]',
                       'rounded-xl p-8',
                       'bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800',
                       'focus:outline-none',
@@ -727,7 +727,7 @@ export const MyDeck = (props: DeckProps) => {
                         align="center"
                         sideOffset={2}
                         className={clsx(
-                          'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[400px] p-8',
+                          'radix-side-top:animate-slide-up radix-side-bottom:animate-slide-down z-50 h-[300px] w-[300px] p-8',
                           ' mx-12 rounded-xl',
                           'bg-neutral-500 shadow-2xl shadow-black dark:bg-gray-800',
                           'focus:outline-none',
