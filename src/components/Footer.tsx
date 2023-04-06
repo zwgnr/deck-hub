@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react';
 
+import package_json from '../../package.json';
+
 const twitter = <Icon icon="mdi:twitter" className="h-6 w-6" />;
 
 export const Footer = () => (
@@ -23,6 +25,7 @@ export const Footer = () => (
         <p className="ml-2">Donate</p>
       </a>
     </div>
+    <p>{`v${package_json.version}`}</p>
     <div className="flex">
       <p className="text-xs">*Not affiliated with Parallel Studios or EchelonFND</p>
     </div>
