@@ -249,11 +249,24 @@ export const CardList = (props: CardListProps) => {
               <div className="relative h-36 w-24">
                 {statsEnabled ? (
                   <>
-                    <div className="absolute right-16 top-0  flex items-center justify-center text-gray-300">
+                    <div className="absolute right-8 top-0  z-10 flex items-center justify-center text-gray-300">
                       {handleCardType(card.gameData.cardType)}
                     </div>
-                    <div className=" absolute right-2 top-2  flex items-center justify-center px-1 text-white">
+                    <div className=" absolute right-1 top-1  z-10 flex items-center justify-center px-1 text-white">
                       <p>{card.gameData.cost}</p>
+                    </div>
+                  </>
+                ) : null}
+                {card.gameData.cardType === 'Unit' && statsEnabled ? (
+                  <>
+                    <div className="absolute bottom-6 left-1 z-10 flex items-center justify-center px-1 text-white">
+                      <p>{card.gameData.attack}</p>
+                    </div>
+                    <div className="absolute bottom-6 right-8 flex items-center justify-center px-1  text-gray-200">
+                      {handleCardIcon(card.gameData.functionText)}
+                    </div>
+                    <div className="absolute bottom-6 right-1 z-10 flex items-center justify-center  px-1 text-white">
+                      <p>{card.gameData.health}</p>
                     </div>
                   </>
                 ) : null}
@@ -279,19 +292,6 @@ export const CardList = (props: CardListProps) => {
                     />
                   </button>
                 </Popover.Trigger>
-                {card.gameData.cardType === 'Unit' && statsEnabled ? (
-                  <>
-                    <div className="absolute bottom-10 left-2 flex items-center justify-center px-1 text-white">
-                      <p>{card.gameData.attack}</p>
-                    </div>
-                    <div className="absolute bottom-10 right-16 flex items-center justify-center px-1  text-gray-200">
-                      {handleCardIcon(card.gameData.functionText)}
-                    </div>
-                    <div className="absolute bottom-10 right-2 flex items-center justify-center px-1  text-white">
-                      <p>{card.gameData.health}</p>
-                    </div>
-                  </>
-                ) : null}
               </div>
               {hoverEnabled ? (
                 <Popover.Content
@@ -349,6 +349,19 @@ export const CardList = (props: CardListProps) => {
                     </div>
                   </>
                 ) : null}
+                {card.gameData.cardType === 'Unit' && statsEnabled ? (
+                  <>
+                    <div className="absolute bottom-10 left-2 flex items-center justify-center px-1 text-white">
+                      <p>{card.gameData.attack}</p>
+                    </div>
+                    <div className="absolute bottom-10 right-16 flex items-center justify-center px-1  text-gray-200">
+                      {handleCardIcon(card.gameData.functionText)}
+                    </div>
+                    <div className="absolute bottom-10 right-2 flex items-center justify-center px-1  text-white">
+                      <p>{card.gameData.health}</p>
+                    </div>
+                  </>
+                ) : null}
                 <HoverCardPrimitive.Trigger asChild>
                   <button
                     type="button"
@@ -373,19 +386,6 @@ export const CardList = (props: CardListProps) => {
                     />
                   </button>
                 </HoverCardPrimitive.Trigger>
-                {card.gameData.cardType === 'Unit' && statsEnabled ? (
-                  <>
-                    <div className="absolute bottom-10 left-2 flex items-center justify-center px-1 text-white">
-                      <p>{card.gameData.attack}</p>
-                    </div>
-                    <div className="absolute bottom-10 right-16 flex items-center justify-center px-1  text-gray-200">
-                      {handleCardIcon(card.gameData.functionText)}
-                    </div>
-                    <div className="absolute bottom-10 right-2 flex items-center justify-center px-1  text-white">
-                      <p>{card.gameData.health}</p>
-                    </div>
-                  </>
-                ) : null}
               </div>
               {hoverEnabled ? (
                 <HoverCardPrimitive.Content

@@ -711,7 +711,7 @@ export const MyDeck = (props: DeckProps) => {
                             </div>
                           </>
                         ) : null}
-                        {card.gameData.cardType !== 'Unit' && statsEnabled ? (
+                        {card.gameData.cardType === 'Unit' && statsEnabled ? (
                           <>
                             <div className="absolute bottom-5 left-1 flex items-center justify-center text-white">
                               <p>{card.gameData.attack}</p>
@@ -811,7 +811,7 @@ export const MyDeck = (props: DeckProps) => {
                             </div>
                           </>
                         ) : null}
-                        {card.gameData.cardType !== 'Unit' && statsEnabled ? (
+                        {card.gameData.cardType === 'Unit' && statsEnabled ? (
                           <>
                             <div className="absolute bottom-5 left-1 flex items-center justify-center text-white">
                               <p>{card.gameData.attack}</p>
