@@ -155,7 +155,9 @@ export const MyDeck = (props: DeckProps) => {
       const filteredDeck = deck.filter((card) => Number(card.gameData.cost) <= 5);
       setDeck(filteredDeck);
     }
-  }, [activeParagon, deck, setDeck]);
+    // can not find a workaround for this at the moment
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeParagon]);
 
   // set deck code
   useEffect(() => {
