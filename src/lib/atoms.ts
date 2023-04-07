@@ -54,6 +54,8 @@ type DeckCard = {
 
 export const deckAtom = atomWithStorage<DeckCard[]>('deck', []);
 
+export const atdSuccessAtom = atom(false);
+
 interface DeckError {
   errorCode: string;
 }

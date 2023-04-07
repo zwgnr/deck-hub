@@ -34,6 +34,7 @@ import { TypeChart } from './typeChart';
 
 import { AddToDeckErrorMessage } from './ATDErrorMessage';
 import { ImportErrorMessage } from './ImportErrorMessage';
+import { AddToDeckSuccess } from './ATDSuccess';
 
 export interface DeckProps {
   cards: Cards;
@@ -438,6 +439,7 @@ export const MyDeck = (props: DeckProps) => {
     <div className="flex h-full w-full flex-col gap-8 rounded-xl border-2 border-neutral-300 bg-white py-0 pl-0 shadow-lg dark:border-transparent dark:bg-neutral-800 xl:flex-row xl:gap-0 xl:py-8 xl:pl-8 ">
       <AddToDeckErrorMessage />
       <ImportErrorMessage />
+      <AddToDeckSuccess />
       <CopyAlert text={deckCode} showAlert={showAlert} setShowAlert={setShowAlert} />
       <div className=" flex h-fit w-full flex-col items-start justify-center overflow-hidden rounded-xl border-2 dark:border-transparent dark:bg-neutral-900 xl:h-full xl:w-2/6 ">
         <div className="flex w-full justify-center p-2">
