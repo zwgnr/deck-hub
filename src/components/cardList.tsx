@@ -84,6 +84,10 @@ export const CardList = (props: CardListProps) => {
             newDeck.splice(index + 1, 0, card);
             return newDeck;
           });
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 1000);
         } else {
           // handle error message if user tries to add more than 1 legendary
           setDeckError((prevState) => ({
@@ -131,6 +135,10 @@ export const CardList = (props: CardListProps) => {
             newDeck.splice(index + 1, 0, card);
             return newDeck;
           });
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 1000);
         } else {
           // handle error message if user tries to add more than 1 legendary
           setDeckError((prevState) => ({
@@ -151,6 +159,10 @@ export const CardList = (props: CardListProps) => {
             newDeck.splice(index + 1, 0, card);
             return newDeck;
           });
+          setSuccess(true);
+          setTimeout(() => {
+            setSuccess(false);
+          }, 1000);
         } else {
           // handle error message if user tries to add non legendary where count > 3
           setDeckError((prevState) => ({
