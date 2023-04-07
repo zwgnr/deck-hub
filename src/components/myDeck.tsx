@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
@@ -149,15 +149,18 @@ export const MyDeck = (props: DeckProps) => {
     }
   }, [activeParagon.name, paragons, parallelChoice, setActiveParagon]);
 
-  // remove cards with cost > 5 from deck if Niamh is set as active Paragon
+  const deckRef = useRef(deck);
+
+  useEffect(() => {
+    deckRef.current = deck;
+  }, [deck]);
+
   useEffect(() => {
     if (activeParagon?.tokenId === '10929') {
-      const filteredDeck = deck.filter((card) => Number(card.gameData.cost) <= 5);
+      const filteredDeck = deckRef.current.filter((card) => Number(card.gameData.cost) <= 5);
       setDeck(filteredDeck);
     }
-    // can not find a workaround for this at the moment
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeParagon]);
+  }, [activeParagon, setDeck]);
 
   // set deck code
   useEffect(() => {
