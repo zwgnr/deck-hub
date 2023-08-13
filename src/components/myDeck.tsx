@@ -408,7 +408,7 @@ export const MyDeck = (props: DeckProps) => {
         return <span key={uuidv4()}>{word} </span>;
       });
       return (
-        <div className="flex flex-col gap-2 pt-1 pb-4">
+        <div className="flex flex-col gap-2 pb-4 pt-1">
           <div>
             {tag === 'Muster:' && (
               <span className="text-md mr-1 w-fit rounded-md bg-slate-800 p-1 font-bold">
