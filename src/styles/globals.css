@@ -36,8 +36,8 @@
     --primary: 163 230 53; /* #a3e635  */
     --primary-fg: 10 10 10; /* #0a0a0a */
 
-    --secondary: 212 212 212; /* neutral-300 */
-    --secondary-fg: 10 10 10; /* #0a0a0a */
+    --secondary: 10 10 10; /* #0a0a0a  */
+    --secondary-fg: 250 250 250; /* #fafafa  */
 
     --positive: 109 211 46; /* #6DD32E */
     --positive-fg: 10 10 10; /* #0a0a0a */
@@ -69,7 +69,7 @@
     --primary: 163 230 53; /* #a3e635  */
     --primary-fg: 10 10 10; /* #0a0a0a */
 
-    --secondary: 212 212 212; /* neutral-300 */
+    --secondary: 250 250 250; /* #fafafa  */
     --secondary-fg: 10 10 10; /* #0a0a0a */
 
     --positive: 109 211 46; /* #6DD32E */

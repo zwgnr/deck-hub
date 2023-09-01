@@ -1,11 +1,13 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { type Dispatch, Fragment, type SetStateAction } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+import { type Dispatch, type SetStateAction } from 'react';
+
 import { deckAtom, parallelChoiceAtom, paragonAtom, importErrorAtom } from '~/lib/atoms';
 import { useSetAtom } from 'jotai';
 import { useRef } from 'react';
 import type { Card, Cards, Paragons } from '~/types/sharedTypes';
-import { Package } from 'lucide-react';
+import { Check, Upload } from 'lucide-react';
+import { Button } from './base/button';
+import { DialogContent, DialogModal, DialogTrigger } from './base/dialog';
+import { Heading } from 'react-aria-components';
 
 export interface DeckImportProps {
   openImport: boolean;
@@ -195,51 +197,20 @@ export const DeckImport = (props: DeckImportProps) => {
   };
 
   return (
-    <Transition.Root show={openImport} as={Fragment}>
-      <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" onClose={setOpenImport}>
-        <div className="flex min-h-screen items-end justify-center px-4 pb-20 pt-4 text-center sm:block sm:p-0">
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-
-          {/* This element is to trick the browser into centering the modal contents. */}
-          <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
-            &#8203;
-          </span>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            enterTo="opacity-100 translate-y-0 sm:scale-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          >
-            <div className="inline-block transform overflow-hidden rounded-lg bg-surface px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all dark:bg-neutral-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
-              <div>
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral-500">
-                  <Package className="h-6 w-6" />
-                </div>
-                <div className="mt-3 text-center sm:mt-5">
-                  <Dialog.Title as="h3" className="text-xl font-bold leading-6 ">
-                    Import Deck Code
-                  </Dialog.Title>
-                  <div className="m-2 mb-8 mt-8">
-                    <p className="text-sm text-gray-500">
-                      *Code must be in the offical Parallel Deck Code format, i.e.
-                      CB-9,CB-408,2XCB-103,3XCB-28
-                    </p>
-                  </div>
-                </div>
-              </div>
+    <DialogTrigger>
+      <Button intent="secondary" className="rounded-lg p-2">
+        <Upload className="h-6 w-6" />
+      </Button>
+      <DialogModal>
+        <DialogContent>
+          {({ close }) => (
+            <>
+              <Check className="h-8 w-8 text-green-500" />
+              <Heading className="text-lg font-bold">Import Deck Code</Heading>
+              <p className="text-sm text-fg-3">
+                *Code must be in the offical Parallel Deck Code format, i.e.
+                CB-9,CB-408,2XCB-103,3XCB-28
+              </p>
               <div>
                 <label htmlFor="deckCode" className="block text-sm font-medium ">
                   Paste your code here
@@ -249,26 +220,17 @@ export const DeckImport = (props: DeckImportProps) => {
                       rows={4}
                       name="deckCode"
                       id="deckCode"
-                      className="block w-full rounded-md border-gray-300 bg-surface-2 shadow-sm ring-transparent focus:border-transparent focus:outline-transparent focus:ring-2  focus:ring-primary  dark:focus:outline-transparent sm:text-sm"
+                      className="block w-full rounded-md border-gray-300 bg-surface-2 shadow-sm ring-transparent focus:border-transparent focus:outline-transparent focus:ring-2  focus:ring-primary dark:focus:outline-transparent sm:text-sm"
                       defaultValue=""
                     />
                   </div>
                 </label>
               </div>
-
-              <div className="mt-5 sm:mt-6">
-                <button
-                  type="button"
-                  className="inline-flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-base font-medium text-primary-fg shadow-sm  sm:text-sm"
-                  onClick={() => handleDeckDode()}
-                >
-                  Import
-                </button>
-              </div>
-            </div>
-          </Transition.Child>
-        </div>
-      </Dialog>
-    </Transition.Root>
+              <Button onPress={() => handleDeckDode()}>Import</Button>
+            </>
+          )}
+        </DialogContent>
+      </DialogModal>
+    </DialogTrigger>
   );
 };

@@ -288,21 +288,14 @@ export const Home = (props: HomeProps) => {
             Deck
             <span className="text-primary">Hub</span>
           </h1>
-          <DeckImport
-            openImport={openImport}
-            setOpenImport={setOpenImport}
-            cards={cards}
-            paragons={paragons}
-          />
+
           <div className="absolute right-8 flex gap-4">
-            <button
-              onClick={() => setOpenImport(true)}
-              title="Import Deck"
-              className="rounded-lg bg-secondary p-2 text-secondary-fg hover:bg-secondary/60 sm:block"
-              type="button"
-            >
-              <Upload className="h-6 w-6" />
-            </button>
+            <DeckImport
+              openImport={openImport}
+              setOpenImport={setOpenImport}
+              cards={cards}
+              paragons={paragons}
+            />
             <button
               onClick={handleStartOver}
               title="Start Over"
