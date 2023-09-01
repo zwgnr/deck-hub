@@ -1,15 +1,15 @@
-import { Icon } from '@iconify/react';
+import { ChevronsUp, Shield, ShieldCheck } from 'lucide-react';
 
 export const handleCardIcon = (skill: string) => {
   if (skill?.includes('*Shielded*')) {
-    return <Icon icon="material-symbols:health-and-safety-outline" className="h-6 w-6" />;
+    return <ShieldCheck className="h-6 w-6" />;
   }
   if (skill?.includes('*Defender*')) {
-    return <Icon icon="ic:outline-shield" className="h-6 w-6" />;
+    return <Shield className="h-6 w-6" />;
   }
 
   if (skill?.includes('*Muster*')) {
-    return <Icon icon="material-symbols:keyboard-double-arrow-up" className="h-6 w-6" />;
+    return <ChevronsUp className="h-6 w-6" />;
   }
   return null;
 };

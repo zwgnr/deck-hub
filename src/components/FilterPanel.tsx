@@ -9,12 +9,13 @@ import {
 } from 'react';
 
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Icon } from '@iconify/react';
+
 import clsx from 'clsx';
 
 import { type FilterOptions, filterOptions } from '~/lib/filterOptions';
 
 import type { Card, Cards } from '~/types/sharedTypes';
+import { ChevronDown, Filter } from 'lucide-react';
 
 export interface FilterPanelProps {
   cards: Cards;
@@ -201,11 +202,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
           <div className="mx-auto flex max-w-7xl space-x-6 divide-x divide-gray-300 text-sm">
             <div>
               <Disclosure.Button className="group flex items-center font-medium dark:text-neutral-500">
-                <Icon
-                  icon="material-symbols:filter-alt-outline-sharp"
-                  className="mr-2 h-5 w-5 flex-none dark:text-gray-300 "
-                  aria-hidden="true"
-                />
+                <Filter className="mr-2 h-5 w-5 flex-none dark:text-gray-300 " aria-hidden="true" />
                 {fitlerCount} Filters
               </Disclosure.Button>
             </div>
@@ -378,8 +375,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
               <div className="flex">
                 <Menu.Button className="group inline-flex justify-center text-sm font-medium hover:text-gray-900 dark:text-gray-300">
                   Sort
-                  <Icon
-                    icon="mdi:chevron-down"
+                  <ChevronDown
                     className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                     aria-hidden="true"
                   />

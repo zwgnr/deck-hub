@@ -20,7 +20,7 @@ export const StatsToggle = () => {
         checked={statsEnabled}
         onChange={setStatsEnabled}
         className={clsx(
-          statsEnabled ? 'bg-lime-400' : 'bg-neutral-300 dark:bg-neutral-600',
+          statsEnabled ? 'bg-primary' : 'bg-secondary',
           'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 ease-in-out',
         )}
       >

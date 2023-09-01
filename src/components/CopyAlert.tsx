@@ -1,5 +1,6 @@
 import { Transition } from '@headlessui/react';
-import { Icon } from '@iconify/react';
+
+import { CheckCircle, X } from 'lucide-react';
 import { type Dispatch, Fragment, type SetStateAction } from 'react';
 
 interface CopyAlertProps {
@@ -27,15 +28,11 @@ export const CopyAlert = ({ text, showAlert, setShowAlert }: CopyAlertProps) => 
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-green-600 text-black shadow-lg ring-1 ring-black ring-opacity-5">
+          <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-positive text-black shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="p-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
-                  <Icon
-                    icon="material-symbols:check-circle"
-                    className="h-8 w-8 text-green-400"
-                    aria-hidden="true"
-                  />
+                  <CheckCircle className="h-8 w-8 text-positive-fg" aria-hidden="true" />
                 </div>
                 <div className="ml-3 w-0 flex-1 pt-0.5">
                   <p className="text-md mb-4 font-medium">
@@ -46,13 +43,13 @@ export const CopyAlert = ({ text, showAlert, setShowAlert }: CopyAlertProps) => 
                 <div className="ml-4 flex flex-shrink-0">
                   <button
                     type="button"
-                    className="inline-flex rounded-md bg-green-700 text-black  hover:text-gray-700 "
+                    className="inline-flex rounded-md text-black  hover:text-gray-700 "
                     onClick={() => {
                       setShowAlert(false);
                     }}
                   >
                     <span className="sr-only">Close</span>
-                    <Icon icon="ic:round-close" className="h-8 w-8" aria-hidden="true" />
+                    <X className="h-8 w-8" aria-hidden="true" />
                   </button>
                 </div>
               </div>

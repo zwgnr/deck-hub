@@ -1,10 +1,10 @@
-import { Icon } from '@iconify/react';
 import { useAtomValue } from 'jotai';
 import { isMobile } from '~/lib/atoms';
 
 import package_json from '../../package.json';
+import { Twitter } from 'lucide-react';
 
-const twitter = <Icon icon="mdi:twitter" className="h-6 w-6" />;
+const twitter = <Twitter className="h-6 w-6" />;
 
 export const Footer = () => {
   const mobile = useAtomValue(isMobile);
@@ -17,7 +17,7 @@ export const Footer = () => {
           href="https://twitter.com/zwagnr"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-lime-400"
+          className="text-primary"
         >
           {twitter}
         </a>

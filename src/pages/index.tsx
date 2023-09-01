@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { request, gql } from 'graphql-request';
-import { Icon } from '@iconify/react';
 
 import { CardList } from '~/components/cardList';
 import { MyDeck } from '~/components/myDeck';
@@ -237,6 +236,11 @@ export const Home = (props: HomeProps) => {
   const setDeck = useSetAtom(deckAtom);
   const mobile = useAtomValue(isMobile);
   const [openImport, setOpenImport] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   const handleStartOver = () => {
     setParallelChoice('');
@@ -321,7 +325,13 @@ export const Home = (props: HomeProps) => {
               className="rounded-xl p-1 text-gray-400"
               onClick={() => (theme === 'light' ? setTheme('dark') : setTheme('light'))}
             >
-              {theme === 'light' ? <Sun className="h-8 w-8" /> : <Moon className="h-8 w-8" />}
+              {hasMounted ? (
+                theme === 'light' ? (
+                  <Sun className="h-8 w-8" />
+                ) : (
+                  <Moon className="h-8 w-8" />
+                )
+              ) : null}
             </button>
           </div>
         </div>

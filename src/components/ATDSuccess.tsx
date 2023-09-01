@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
-import { Icon } from '@iconify/react';
 import { useAtomValue } from 'jotai';
+import { CheckCircle } from 'lucide-react';
 import { Fragment, useEffect, useState } from 'react';
 
 import { atdSuccessAtom } from '~/lib/atoms';
@@ -32,8 +32,8 @@ export const AddToDeckSuccess = () => {
           leaveFrom="translate-y-8 opacity-100"
           leaveTo="opacity-0"
         >
-          <div className=" z-50 flex h-16 w-16 items-center  justify-center rounded-md  border-lime-500 bg-lime-500 shadow-xl shadow-lime-200 dark:shadow-lime-900/20">
-            <Icon icon="material-symbols:check-box" className="h-12 w-12 text-white" />
+          <div className="z-50 flex h-16 w-16 items-center  justify-center rounded-md bg-positive">
+            <CheckCircle className="h-12 w-12 text-positive-fg" />
           </div>
         </Transition>
       </div>

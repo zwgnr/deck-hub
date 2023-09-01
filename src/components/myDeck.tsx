@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
-import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import * as Popover from '@radix-ui/react-popover';
@@ -35,6 +34,15 @@ import { TypeChart } from './typeChart';
 import { AddToDeckErrorMessage } from './ATDErrorMessage';
 import { ImportErrorMessage } from './ImportErrorMessage';
 import { AddToDeckSuccess } from './ATDSuccess';
+import {
+  ArrowLeftCircle,
+  ArrowRightCircle,
+  Download,
+  Eraser,
+  MinusSquare,
+  Plus,
+  PlusSquare,
+} from 'lucide-react';
 
 export interface DeckProps {
   cards: Cards;
@@ -436,12 +444,12 @@ export const MyDeck = (props: DeckProps) => {
   }
 
   return (
-    <div className="flex h-full w-full flex-col gap-8 rounded-xl border-2 border-neutral-300 bg-white py-0 pl-0 shadow-lg dark:border-transparent dark:bg-neutral-800 xl:flex-row xl:gap-0 xl:py-8 xl:pl-8 ">
+    <div className="flex h-full w-full flex-col gap-8 rounded-xl border-2 border-border py-0 pl-0 shadow-lg xl:flex-row xl:gap-0 xl:py-8 xl:pl-8 ">
       <AddToDeckErrorMessage />
       <ImportErrorMessage />
       <AddToDeckSuccess />
       <CopyAlert text={deckCode} showAlert={showAlert} setShowAlert={setShowAlert} />
-      <div className=" flex h-fit w-full flex-col items-start justify-center overflow-hidden rounded-xl border-2 dark:border-transparent dark:bg-neutral-900 xl:h-full xl:w-2/6 ">
+      <div className=" flex h-fit w-full flex-col items-start justify-center overflow-hidden rounded-xl border-2 border-border xl:h-full xl:w-2/6 ">
         <div className="flex w-full justify-center p-2">
           <p className="text-lg font-bold">Paragon</p>
         </div>
@@ -620,7 +628,7 @@ export const MyDeck = (props: DeckProps) => {
               className="h-12 w-12 "
               title="Change Paragon"
             >
-              <Icon icon="ic:outline-arrow-circle-left" className="h-8 w-8 dark:text-neutral-400" />
+              <ArrowLeftCircle className="h-8 w-8 dark:text-neutral-400" />
             </button>
             <button
               type="button"
@@ -628,10 +636,7 @@ export const MyDeck = (props: DeckProps) => {
               className="h-12 w-12 "
               title="Change Paragon"
             >
-              <Icon
-                icon="ic:outline-arrow-circle-right"
-                className="h-8 w-8 dark:text-neutral-400"
-              />
+              <ArrowRightCircle className="h-8 w-8 dark:text-neutral-400" />
             </button>
           </div>
         </div>
@@ -655,9 +660,9 @@ export const MyDeck = (props: DeckProps) => {
               type="button"
               title="Clear Deck"
               onClick={() => setDeck([])}
-              className="rounded-md bg-neutral-300 p-2 hover:bg-neutral-400 dark:bg-neutral-600 dark:text-gray-300 dark:hover:bg-neutral-500"
+              className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
             >
-              <Icon icon="ic:outline-layers-clear" className="h-6 w-6" />
+              <Eraser className="h-6 w-6" />
             </button>{' '}
             <button
               type="button"
@@ -675,9 +680,9 @@ export const MyDeck = (props: DeckProps) => {
                   console.error('Error in async function:', error);
                 });
               }}
-              className="rounded-md bg-neutral-300 p-2 hover:bg-neutral-400 dark:bg-neutral-600 dark:text-gray-300 dark:hover:bg-neutral-500"
+              className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
             >
-              <Icon icon="ic:twotone-save-alt" className="h-6 w-6" />
+              <Download className="h-6 w-6" />
             </button>
           </div>
         </div>
@@ -773,16 +778,10 @@ export const MyDeck = (props: DeckProps) => {
 
                     <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
                       <button type="button" onClick={() => removeOne(index)}>
-                        <Icon
-                          icon="mdi:minus-box"
-                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
-                        />
+                        <MinusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
                       </button>
                       <button type="button" onClick={() => addOne(card)}>
-                        <Icon
-                          icon="material-symbols:add-box"
-                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
-                        />
+                        <PlusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
                       </button>
                     </div>
                   </div>
@@ -889,16 +888,10 @@ export const MyDeck = (props: DeckProps) => {
 
                     <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
                       <button type="button" onClick={() => removeOne(index)}>
-                        <Icon
-                          icon="mdi:minus-box"
-                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
-                        />
+                        <MinusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
                       </button>
                       <button type="button" onClick={() => addOne(card)}>
-                        <Icon
-                          icon="material-symbols:add-box"
-                          className="h-6 w-6 text-neutral-700 dark:text-neutral-500"
-                        />
+                        <PlusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
                       </button>
                     </div>
                   </div>

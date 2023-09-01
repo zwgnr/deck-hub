@@ -1,11 +1,11 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { type Dispatch, Fragment, type SetStateAction } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { Icon } from '@iconify/react';
 import { deckAtom, parallelChoiceAtom, paragonAtom, importErrorAtom } from '~/lib/atoms';
 import { useSetAtom } from 'jotai';
 import { useRef } from 'react';
 import type { Card, Cards, Paragons } from '~/types/sharedTypes';
+import { Package } from 'lucide-react';
 
 export interface DeckImportProps {
   openImport: boolean;
@@ -223,10 +223,10 @@ export const DeckImport = (props: DeckImportProps) => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="bg-nuetral-100 inline-block transform overflow-hidden rounded-lg bg-neutral-200 px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all dark:bg-neutral-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
+            <div className="inline-block transform overflow-hidden rounded-lg bg-surface px-4 pb-4 pt-5 text-left align-bottom shadow-xl transition-all dark:bg-neutral-900 sm:my-8 sm:w-full sm:max-w-sm sm:p-6 sm:align-middle">
               <div>
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-neutral-500">
-                  <Icon icon="material-symbols:deployed-code-outline" className="h-6 w-6" />
+                  <Package className="h-6 w-6" />
                 </div>
                 <div className="mt-3 text-center sm:mt-5">
                   <Dialog.Title as="h3" className="text-xl font-bold leading-6 ">
@@ -249,7 +249,7 @@ export const DeckImport = (props: DeckImportProps) => {
                       rows={4}
                       name="deckCode"
                       id="deckCode"
-                      className="block w-full rounded-md border-gray-300 bg-neutral-100 shadow-sm ring-transparent focus:border-transparent focus:outline-transparent focus:ring-2  focus:ring-lime-500   dark:bg-neutral-700 dark:focus:outline-transparent dark:focus:ring-lime-500 sm:text-sm"
+                      className="block w-full rounded-md border-gray-300 bg-surface-2 shadow-sm ring-transparent focus:border-transparent focus:outline-transparent focus:ring-2  focus:ring-primary  dark:focus:outline-transparent sm:text-sm"
                       defaultValue=""
                     />
                   </div>
@@ -259,7 +259,7 @@ export const DeckImport = (props: DeckImportProps) => {
               <div className="mt-5 sm:mt-6">
                 <button
                   type="button"
-                  className="inline-flex w-full justify-center rounded-md border border-transparent bg-lime-500 px-4 py-2 text-base font-medium text-white shadow-sm  sm:text-sm"
+                  className="inline-flex w-full justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-base font-medium text-primary-fg shadow-sm  sm:text-sm"
                   onClick={() => handleDeckDode()}
                 >
                   Import
