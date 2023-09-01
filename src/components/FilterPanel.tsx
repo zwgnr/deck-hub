@@ -26,7 +26,7 @@ export interface FilterPanelProps {
 
 export const FilterPanel = (props: FilterPanelProps) => {
   const { cards, setVisibleCards } = props;
-  let [sortOption, setSortOption] = useState<Selection>(new Set(['Energy Cost']));
+  const [sortOption, setSortOption] = useState<Selection>(new Set(['Energy Cost']));
   const [fitlerCount, setFilterCount] = useState(0);
   const [clear, setClear] = useState(false);
 
@@ -227,8 +227,10 @@ export const FilterPanel = (props: FilterPanelProps) => {
               selectedKeys={sortOption}
               onSelectionChange={setSortOption}
             >
-              {sortOptions.map((option) => (
-                <MenuItem id={option.name}>{option.name}</MenuItem>
+              {sortOptions.map((option, index) => (
+                <MenuItem key={index} id={option.name}>
+                  {option.name}
+                </MenuItem>
               ))}
             </MenuContent>
           </MenuTrigger>

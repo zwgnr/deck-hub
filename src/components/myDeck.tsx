@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
-import * as Popover from '@radix-ui/react-popover';
+import * as RadixPopover from '@radix-ui/react-popover';
 import { v4 as uuidv4 } from 'uuid';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 
@@ -40,9 +40,11 @@ import {
   Download,
   Eraser,
   MinusSquare,
-  Plus,
   PlusSquare,
 } from 'lucide-react';
+import { Popover, PopoverTrigger } from './base/popover';
+import { Button } from './base/button';
+import { Tooltip, TooltipTrigger } from './base/tooltip';
 
 export interface DeckProps {
   cards: Cards;
@@ -442,7 +444,8 @@ export const MyDeck = (props: DeckProps) => {
       return handlePassive(result);
     }
   }
-
+  const [isOpen, setOpen] = useState(false);
+  const triggerRef = useRef(null);
   return (
     <div className="flex h-full w-full flex-col gap-8 rounded-xl border-2 border-border py-0 pl-0 shadow-lg xl:flex-row xl:gap-0 xl:py-8 xl:pl-8 ">
       <AddToDeckErrorMessage />
@@ -455,10 +458,21 @@ export const MyDeck = (props: DeckProps) => {
         </div>
 
         <div className="flex h-56 w-full overflow-hidden  xl:h-2/5">
+          <TooltipTrigger isOpen={isOpen} onOpenChange={setOpen}>
+            <Button intent="secondary">
+              {({ isPressed }) => (
+                <>
+                  {mobile && isPressed && setOpen(true)}
+                  Press me
+                </>
+              )}
+            </Button>
+            <Tooltip>Save</Tooltip>
+          </TooltipTrigger>
           {mobile ? (
-            <Popover.Root>
+            <RadixPopover.Root>
               <div className="relative flex h-full w-full">
-                <Popover.Trigger asChild>
+                <RadixPopover.Trigger asChild>
                   {parallelChoice === '' ? (
                     <Image
                       src={'/images/paragonPlaceholder.png'}
@@ -478,9 +492,9 @@ export const MyDeck = (props: DeckProps) => {
                       sizes="50vw"
                     />
                   )}
-                </Popover.Trigger>
+                </RadixPopover.Trigger>
                 {activeParagon.id !== '' && hoverEnabled ? (
-                  <Popover.Content
+                  <RadixPopover.Content
                     side="bottom"
                     align="center"
                     sideOffset={2}
@@ -491,7 +505,7 @@ export const MyDeck = (props: DeckProps) => {
                       'focus:outline-none',
                     )}
                   >
-                    <Popover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
+                    <RadixPopover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
 
                     <div className="flex h-full w-full space-x-4">
                       <div className="flex flex-col gap-4">
@@ -524,10 +538,10 @@ export const MyDeck = (props: DeckProps) => {
                         </div>
                       </div>
                     </div>
-                  </Popover.Content>
+                  </RadixPopover.Content>
                 ) : null}
               </div>
-            </Popover.Root>
+            </RadixPopover.Root>
           ) : (
             <HoverCardPrimitive.Root openDelay={0} closeDelay={0}>
               <div className="relative flex h-full w-full">
@@ -690,9 +704,9 @@ export const MyDeck = (props: DeckProps) => {
           ? null
           : sortedCards.map((card, index) =>
               mobile ? (
-                <Popover.Root key={index}>
+                <RadixPopover.Root key={index}>
                   <div>
-                    <Popover.Trigger asChild>
+                    <RadixPopover.Trigger asChild>
                       <div
                         role="button"
                         tabIndex={0}
@@ -732,9 +746,9 @@ export const MyDeck = (props: DeckProps) => {
                           </>
                         ) : null}
                       </div>
-                    </Popover.Trigger>
+                    </RadixPopover.Trigger>
                     {hoverEnabled ? (
-                      <Popover.Content
+                      <RadixPopover.Content
                         side="bottom"
                         align="center"
                         sideOffset={2}
@@ -745,7 +759,7 @@ export const MyDeck = (props: DeckProps) => {
                           'focus:outline-none',
                         )}
                       >
-                        <Popover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
+                        <RadixPopover.Arrow className="fill-current text-slate-600 dark:text-gray-800" />
 
                         <div className="flex h-full w-full space-x-4">
                           <div className="flex flex-col justify-center gap-4">
@@ -773,19 +787,19 @@ export const MyDeck = (props: DeckProps) => {
                             </div>
                           </div>
                         </div>
-                      </Popover.Content>
+                      </RadixPopover.Content>
                     ) : null}
 
                     <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
                       <button type="button" onClick={() => removeOne(index)}>
-                        <MinusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
+                        <MinusSquare className="h-6 w-6 text-surface-3" />
                       </button>
                       <button type="button" onClick={() => addOne(card)}>
-                        <PlusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
+                        <PlusSquare className="h-6 w-6 text-surface-3" />
                       </button>
                     </div>
                   </div>
-                </Popover.Root>
+                </RadixPopover.Root>
               ) : (
                 <HoverCardPrimitive.Root openDelay={0} closeDelay={0} key={index}>
                   <div>
@@ -888,10 +902,10 @@ export const MyDeck = (props: DeckProps) => {
 
                     <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
                       <button type="button" onClick={() => removeOne(index)}>
-                        <MinusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
+                        <MinusSquare className="h-6 w-6 text-surface-3" />
                       </button>
                       <button type="button" onClick={() => addOne(card)}>
-                        <PlusSquare className="h-6 w-6 text-neutral-700 dark:text-neutral-500" />
+                        <PlusSquare className="h-6 w-6 text-surface-3" />
                       </button>
                     </div>
                   </div>
