@@ -13,6 +13,7 @@ import { deckAtom, isMobile, paragonAtom, parallelChoiceAtom } from '~/lib/atoms
 import type { Cards, Paragons } from '~/types/sharedTypes';
 import { DeckImport } from '~/components/DeckImport';
 import { Footer } from '~/components/Footer';
+import { Moon, RotateCcw, Sun, Upload } from 'lucide-react';
 
 export const getStaticProps = async () => {
   const definedEndpoint = 'https://api.defined.fi';
@@ -277,11 +278,11 @@ export const Home = (props: HomeProps) => {
           type="font/woff2"
         />
       </Head>
-      <main className=" flex h-screen min-h-screen min-w-full flex-col items-center overflow-hidden bg-neutral-100 dark:bg-neutral-900">
-        <div className="flex h-16 w-full items-center justify-start border-b-2  p-4 dark:border-neutral-800">
-          <h1 className="text-3xl font-bold tracking-tight dark:text-white">
+      <main className=" flex h-screen min-h-screen min-w-full flex-col items-center overflow-hidden bg-surface">
+        <div className="flex h-16 w-full items-center justify-start border-b-2 border-border p-4">
+          <h1 className="text-3xl font-bold tracking-tight">
             Deck
-            <span className="text-lime-400 ">Hub</span>
+            <span className="text-primary">Hub</span>
           </h1>
           <DeckImport
             openImport={openImport}
@@ -293,18 +294,18 @@ export const Home = (props: HomeProps) => {
             <button
               onClick={() => setOpenImport(true)}
               title="Import Deck"
-              className="rounded-lg bg-neutral-300 p-2 text-black hover:bg-neutral-400 dark:bg-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-500 sm:block "
+              className="rounded-lg bg-secondary p-2 text-secondary-fg hover:bg-secondary/60 sm:block"
               type="button"
             >
-              <Icon icon="tabler:package-import" className="h-6 w-6" />
+              <Upload className="h-6 w-6" />
             </button>
             <button
               onClick={handleStartOver}
               title="Start Over"
-              className="rounded-lg bg-neutral-300 p-2 text-black hover:bg-neutral-400 dark:bg-neutral-600 dark:text-neutral-300 dark:hover:bg-neutral-500 sm:block"
+              className="rounded-lg bg-secondary p-2 text-secondary-fg hover:bg-secondary/60 sm:block"
               type="button"
             >
-              <Icon icon="material-symbols:restart-alt" className="h-6 w-6" />
+              <RotateCcw className="h-6 w-6" />
             </button>
             {!mobile ? (
               <button
@@ -320,11 +321,7 @@ export const Home = (props: HomeProps) => {
               className="rounded-xl p-1 text-gray-400"
               onClick={() => (theme === 'light' ? setTheme('dark') : setTheme('light'))}
             >
-              {theme === 'light' ? (
-                <Icon icon="ph:sun-bold" className="h-8 w-8" />
-              ) : (
-                <Icon icon="ph:moon-bold" className="h-8 w-8" />
-              )}
+              {theme === 'light' ? <Sun className="h-8 w-8" /> : <Moon className="h-8 w-8" />}
             </button>
           </div>
         </div>
@@ -333,7 +330,7 @@ export const Home = (props: HomeProps) => {
             <div className="flex w-full flex-col gap-2 xl:w-3/5 ">
               <MyDeck cards={cards} paragons={paragons} />
             </div>
-            <div className="w-full rounded-xl border-2 border-neutral-300 bg-white shadow-lg dark:border-transparent dark:bg-neutral-800  xl:w-2/5 ">
+            <div className="w-full rounded-xl border-2 border-border shadow-lg dark:border-transparent  xl:w-2/5 ">
               {parallelChoice === '' ? <ParallelPicker /> : <CardList cards={cards} />}
             </div>
           </div>

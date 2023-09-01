@@ -6,7 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 import '~/styles/globals.css';
 
 const MyApp: AppType = ({ Component, pageProps }) => (
-  <ThemeProvider attribute="class" defaultTheme="dark">
+  <ThemeProvider>
     <Provider>
       <Component {...pageProps} />
       <Analytics />

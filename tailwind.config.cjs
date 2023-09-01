@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [require('./tailwindPreset.js')],
-  darkMode: 'class',
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
