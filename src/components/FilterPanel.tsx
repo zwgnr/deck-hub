@@ -2,19 +2,22 @@ import {
   type ChangeEvent,
   type Dispatch,
   type SetStateAction,
-  Fragment,
   useEffect,
   useState,
   useRef,
 } from 'react';
+import type { Selection } from 'react-aria-components';
 
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { Icon } from '@iconify/react';
+import { Disclosure } from '@headlessui/react';
+
 import clsx from 'clsx';
 
 import { type FilterOptions, filterOptions } from '~/lib/filterOptions';
 
 import type { Card, Cards } from '~/types/sharedTypes';
+import { ChevronDown, Filter } from 'lucide-react';
+import { MenuContent, MenuItem, MenuTrigger } from './base/menu';
+import { Button } from './base/button';
 
 export interface FilterPanelProps {
   cards: Cards;
@@ -23,7 +26,7 @@ export interface FilterPanelProps {
 
 export const FilterPanel = (props: FilterPanelProps) => {
   const { cards, setVisibleCards } = props;
-  const [sortOption, setSortOption] = useState('');
+  const [sortOption, setSortOption] = useState<Selection>(new Set(['Energy Cost']));
   const [fitlerCount, setFilterCount] = useState(0);
   const [clear, setClear] = useState(false);
 
@@ -158,31 +161,25 @@ export const FilterPanel = (props: FilterPanelProps) => {
         (activeFilters.energy?.length === 0 || activeFilters.energy?.includes(card.gameData.cost)),
     );
     setVisibleCards([]);
-    switch (sortOption) {
+
+    const firstSortOption = Array.from(sortOption)[0]; // Converting Set to Array and getting the first value
+
+    switch (firstSortOption) {
       case 'Health':
-        sorted = result.sort(
-          (a: { gameData: { health: string } }, b: { gameData: { health: string } }) =>
-            Number(a.gameData.health) - Number(b.gameData.health),
-        );
+        sorted = result.sort((a, b) => Number(a.gameData.health) - Number(b.gameData.health));
         break;
       case 'Attack':
-        sorted = result.sort(
-          (a: { gameData: { attack: string } }, b: { gameData: { attack: string } }) =>
-            Number(a.gameData.attack) - Number(b.gameData.attack),
-        );
+        sorted = result.sort((a, b) => Number(a.gameData.attack) - Number(b.gameData.attack));
         break;
       case 'Alphabetical':
-        sorted = result.sort((a: { name: string }, b: { name: string }) =>
-          a.name.localeCompare(b.name),
-        );
+        sorted = result.sort((a, b) => a.name.localeCompare(b.name));
         break;
+      case 'Energy Cost':
       default:
-        sorted = result.sort(
-          (a: { gameData: { cost: string } }, b: { gameData: { cost: string } }) =>
-            Number(a.gameData.cost) - Number(b.gameData.cost),
-        );
+        sorted = result.sort((a, b) => Number(a.gameData.cost) - Number(b.gameData.cost));
         break;
     }
+
     setVisibleCards(sorted);
   }, [activeFilters, cards, setVisibleCards, sortOption]);
 
@@ -194,28 +191,51 @@ export const FilterPanel = (props: FilterPanelProps) => {
         aria-labelledby="filter-heading"
         className="relative z-10 grid items-center"
       >
-        <h2 id="filter-heading" className="sr-only">
-          Filters
-        </h2>
-        <div className="relative col-start-1 row-start-1 pb-8">
-          <div className="mx-auto flex max-w-7xl space-x-6 divide-x divide-gray-300 text-sm">
-            <div>
-              <Disclosure.Button className="group flex items-center font-medium dark:text-neutral-500">
-                <Icon
-                  icon="material-symbols:filter-alt-outline-sharp"
-                  className="mr-2 h-5 w-5 flex-none dark:text-gray-300 "
-                  aria-hidden="true"
-                />
-                {fitlerCount} Filters
-              </Disclosure.Button>
-            </div>
-            <div className="pl-6">
-              <button onClick={() => [setClear(true)]} type="button" className="dark:text-gray-300">
-                Clear all
-              </button>
+        <div className="flex w-full items-center justify-between pb-6">
+          <h2 id="filter-heading" className="sr-only">
+            Filters
+          </h2>
+          <div className="relative col-start-1 row-start-1 ">
+            <div className="mx-auto flex max-w-7xl space-x-6 divide-x divide-gray-300 text-sm">
+              <div>
+                <Disclosure.Button className="group flex items-center font-medium dark:text-neutral-500">
+                  <Filter
+                    className="mr-2 h-5 w-5 flex-none dark:text-gray-300 "
+                    aria-hidden="true"
+                  />
+                  {fitlerCount} Filters
+                </Disclosure.Button>
+              </div>
+              <div className="pl-6">
+                <button
+                  onClick={() => [setClear(true)]}
+                  type="button"
+                  className="dark:text-gray-300"
+                >
+                  Clear all
+                </button>
+              </div>
             </div>
           </div>
+          <MenuTrigger>
+            <Button className="gap-2 bg-surface-3 text-fg data-[hovered]:bg-surface-4">
+              <p>Sort</p> <ChevronDown />
+            </Button>
+
+            <MenuContent
+              selectionMode="single"
+              selectedKeys={sortOption}
+              onSelectionChange={setSortOption}
+            >
+              {sortOptions.map((option, index) => (
+                <MenuItem key={index} id={option.name}>
+                  {option.name}
+                </MenuItem>
+              ))}
+            </MenuContent>
+          </MenuTrigger>
         </div>
+
         <Disclosure.Panel className="border-t border-gray-200 py-10">
           <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-4 px-4 text-sm">
             <div className="grid auto-rows-min grid-cols-1 gap-y-10 md:grid-cols-2 md:gap-x-6">
@@ -223,14 +243,14 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Parallel</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.parallel.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`parallel-${optionIdx}`}
                         name="parallel[]"
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -241,7 +261,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`parallel-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -253,14 +273,14 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Rarity</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4 ">
                   {filters.rarity.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`rarity-${optionIdx}`}
                         name="rarity[]"
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -271,7 +291,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`rarity-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -285,14 +305,14 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Type</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.type.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`type-${optionIdx}`}
                         name="type[]"
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -303,7 +323,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`type-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -313,14 +333,14 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block pt-4 font-medium">Sub Type</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.subType.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`subType-${optionIdx}`}
                         name="subType[]"
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-400' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -331,7 +351,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`subType-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -343,15 +363,15 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Energy</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.energy.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`energy-${optionIdx}`}
                         name="energy[]"
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
-                          'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
+                          'h-4 w-4 flex-shrink-0 rounded border-0 outline-none ring-current focus:ring-0 focus:ring-offset-0 focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
                         defaultChecked={option.checked}
@@ -361,7 +381,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`energy-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -372,52 +392,6 @@ export const FilterPanel = (props: FilterPanelProps) => {
             </div>
           </div>
         </Disclosure.Panel>
-        <div className="col-start-1 row-start-1 pb-6">
-          <div className="mx-auto flex max-w-7xl justify-end">
-            <Menu as="div" className="relative inline-block">
-              <div className="flex">
-                <Menu.Button className="group inline-flex justify-center text-sm font-medium hover:text-gray-900 dark:text-gray-300">
-                  Sort
-                  <Icon
-                    icon="mdi:chevron-down"
-                    className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-              </div>
-
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none dark:bg-neutral-700">
-                  <div className="py-1">
-                    {sortOptions.map((option) => (
-                      <Menu.Item key={option.name}>
-                        <a
-                          onClick={() => setSortOption(option.name)}
-                          href={option.href}
-                          className={clsx(
-                            option.current ? 'font-medium text-gray-900' : 'dark:text-gray-200',
-                            sortOption === option.name ? 'bg-lime-400' : '',
-                            'block px-4 py-2 text-sm',
-                          )}
-                        >
-                          {option.name}
-                        </a>
-                      </Menu.Item>
-                    ))}
-                  </div>
-                </Menu.Items>
-              </Transition>
-            </Menu>
-          </div>
-        </div>
       </Disclosure>
     </div>
   );

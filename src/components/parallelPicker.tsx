@@ -46,7 +46,7 @@ export const ParallelPicker = () => {
     <div className="flex h-full w-full flex-col items-center justify-start gap-2 overflow-auto p-4 py-10">
       <h1 className="mb-8 text-2xl font-bold">Choose Your Parallel</h1>
 
-      <div className="flex h-4/5 w-full flex-row flex-wrap items-center justify-center gap-8">
+      <div className="flex w-full flex-row flex-wrap items-center justify-center gap-8">
         {parallels.map((faction) => (
           <button
             key={uuidv4()}

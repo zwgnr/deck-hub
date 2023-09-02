@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react';
-import { Icon } from '@iconify/react';
 import { useAtomValue } from 'jotai';
+import { AlertCircle } from 'lucide-react';
 import { Fragment, useEffect, useState } from 'react';
 
 import { deckErrorAtom, parallelChoiceAtom } from '~/lib/atoms';
@@ -57,13 +57,13 @@ export const AddToDeckErrorMessage = () => {
           leaveFrom="translate-y-8 opacity-100"
           leaveTo="opacity-0"
         >
-          <div className=" z-50 h-36 w-3/4 rounded-md border-red-600 bg-red-700  p-8 shadow-xl shadow-red-200 dark:shadow-red-900/20 lg:h-24 xl:w-1/3">
+          <div className=" z-50 h-36 w-3/4 rounded-md bg-critical p-8 lg:h-24 xl:w-1/3">
             <div className="flex h-full w-full items-center justify-center gap-8">
               <div className="flex-shrink-0">
-                <Icon icon="bi:exclamation-circle-fill" className="h-12 w-12 text-white" />
+                <AlertCircle className="h-12 w-12 text-critical-fg" />
               </div>
               <div>
-                <div className="md:text-md lg:text:xl mt-2 text-sm text-white">
+                <div className="md:text-md lg:text:xl mt-2 text-critical-fg">
                   <p>{errorMessage}</p>
                 </div>
               </div>

@@ -1,10 +1,10 @@
-import { Icon } from '@iconify/react';
 import { useAtomValue } from 'jotai';
 import { isMobile } from '~/lib/atoms';
 
 import package_json from '../../package.json';
+import { Twitter } from 'lucide-react';
 
-const twitter = <Icon icon="mdi:twitter" className="h-6 w-6" />;
+const twitter = <Twitter className="h-6 w-6" />;
 
 export const Footer = () => {
   const mobile = useAtomValue(isMobile);
@@ -17,9 +17,17 @@ export const Footer = () => {
           href="https://twitter.com/zwagnr"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-lime-400"
+          className="text-primary"
         >
           {twitter}
+        </a>
+        <a
+          href="https://github.com/zwgnr/deck-hub/issues"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-1"
+        >
+          <p className="ml-2">Issues</p>
         </a>
         <a
           href="https://etherscan.io/address/0x5e19dafC53f8C6Be0797Ed6c252A92E53cb75860"

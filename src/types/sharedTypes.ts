@@ -2,6 +2,7 @@ export type Card = {
   tokenId: string;
   name: string;
   lastPriceNetworkBaseToken: string;
+  lastPriceUsd?: string;
   media: {
     image: string;
     thumbSm: string;
@@ -25,6 +26,7 @@ export type Cards = {
   tokenId: string;
   name: string;
   lastPriceNetworkBaseToken: string;
+  lastPriceUsd?: string;
   media: {
     image: string;
     thumbSm: string;
