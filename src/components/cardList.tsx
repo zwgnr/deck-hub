@@ -61,14 +61,14 @@ export const CardList = (props: CardListProps) => {
       };
     }
   }, [setMobile]);
-
   // if multiple of the same cards are added, ensure they are placed next to each other
   const handlePlacement = (card: Card) => {
     // find position in deck of card in order to place copies next to it
-    const index = deck.findIndex((item) => item.tokenId === card.tokenId);
+    const index = deck.findIndex((item) => item.id === card.id);
     // get total amount of specifc card in a active deck
-    const count = deck.filter((d) => d.name === card.name).length;
+    const count = deck.filter((d) => d.id === card.id).length;
     // check for Niamh in order to handle passive effect
+
     if (activeParagon?.tokenId !== '10929') {
       // legendary card check with max limit of 1
       if (card.gameData.rarity === 'Legendary') {
@@ -293,7 +293,7 @@ export const CardList = (props: CardListProps) => {
                   }
                 }}
                 className={
-                  'z-50 h-[300px] w-3/4 rounded-xl bg-neutral-500 p-4 shadow-2xl shadow-black focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-slate-800'
+                  'z-50 h-[300px] w-3/4 rounded-xl bg-surface-4 p-4 shadow-2xl shadow-black'
                 }
               >
                 <CardContent cardInfo={cardInfo} />
@@ -336,7 +336,7 @@ export const CardList = (props: CardListProps) => {
 
               <Tooltip
                 className={
-                  'z-50 h-[300px] w-[600px] rounded-xl bg-neutral-500 p-4 shadow-2xl shadow-black focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-slate-800 xl:h-[400px] xl:w-[600px]'
+                  'z-50 h-[300px] w-[600px] rounded-xl bg-surface-4 p-4 shadow-2xl shadow-black xl:h-[400px] xl:w-[600px]'
                 }
               >
                 <CardContent cardInfo={cardInfo} />

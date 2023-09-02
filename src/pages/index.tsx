@@ -34,6 +34,7 @@ export const getStaticProps = async () => {
           tokenId
           name
           lastPriceNetworkBaseToken
+          lastPriceUsd
           media {
             image
             thumbSm
@@ -89,6 +90,7 @@ export const getStaticProps = async () => {
         tokenId: string;
         name: string;
         lastPriceNetworkBaseToken: string;
+        lastPriceUsd: string;
         media: {
           image: string;
           thumbSm: string;

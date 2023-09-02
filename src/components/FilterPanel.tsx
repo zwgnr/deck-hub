@@ -243,7 +243,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Parallel</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.parallel.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`parallel-${optionIdx}`}
                         name="parallel[]"
@@ -261,7 +261,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`parallel-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -273,7 +273,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Rarity</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4 ">
                   {filters.rarity.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`rarity-${optionIdx}`}
                         name="rarity[]"
@@ -291,7 +291,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`rarity-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -305,7 +305,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Type</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.type.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`type-${optionIdx}`}
                         name="type[]"
@@ -323,7 +323,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`type-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -333,7 +333,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block pt-4 font-medium">Sub Type</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.subType.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`subType-${optionIdx}`}
                         name="subType[]"
@@ -351,7 +351,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`subType-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
@@ -363,7 +363,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                 <legend className="block font-medium">Energy</legend>
                 <div className="space-y-6 pt-6 sm:space-y-4 sm:pt-4">
                   {filters.energy.map((option, optionIdx) => (
-                    <div key={option.value} className="flex items-center text-base sm:text-sm">
+                    <div key={option.value} className="flex items-center text-fg sm:text-sm">
                       <input
                         id={`energy-${optionIdx}`}
                         name="energy[]"
@@ -381,7 +381,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                       />
                       <label
                         htmlFor={`energy-${optionIdx}`}
-                        className="ml-3 min-w-0 flex-1 text-neutral-500 dark:text-neutral-400"
+                        className="ml-3 min-w-0 flex-1 text-fg-4"
                       >
                         {option.label}
                       </label>
