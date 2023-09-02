@@ -2,10 +2,7 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { useEffect, useRef, useState } from 'react';
-
-import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
-//import * as Popover from '@radix-ui/react-popover';
+import { useEffect, useState } from 'react';
 
 import { type Card, type Cards } from '~/types/sharedTypes';
 
@@ -17,16 +14,10 @@ import {
   paragonAtom,
   parallelChoiceAtom,
   showDetailsAtom,
-  showStatsAtom,
 } from '~/lib/atoms';
-
-import { handleCardIcon } from '~/lib/handleCardIcon';
-import { formatText } from '../lib/formatCardText';
-import { handleCardType } from '../lib/handleCardType';
 
 import { FilterPanel } from './FilterPanel';
 import { Tooltip, TooltipTrigger } from './base/tooltip';
-import { Button } from './base/button';
 import { CardTrigger } from './CardTrigger';
 import { CardContent } from './CardContent';
 import { Popover, PopoverTrigger } from './base/popover';
@@ -40,7 +31,6 @@ export const CardList = (props: CardListProps) => {
 
   const parallelChoice = useAtomValue(parallelChoiceAtom);
   const [deck, setDeck] = useAtom(deckAtom);
-  const statsEnabled = useAtomValue(showStatsAtom);
   const hoverEnabled = useAtomValue(showDetailsAtom);
   const activeParagon = useAtomValue(paragonAtom);
   const setSuccess = useSetAtom(atdSuccessAtom);
@@ -48,7 +38,6 @@ export const CardList = (props: CardListProps) => {
   const [mobile, setMobile] = useAtom(isMobile);
 
   const [cardInfo, setCardInfo] = useState(cards[0]);
-  const [, setOpen] = useState<boolean>(false);
   const [visibleCards, setVisibleCards] = useState<never[] | Cards>([]);
 
   useEffect(() => {
@@ -259,12 +248,11 @@ export const CardList = (props: CardListProps) => {
 
   const getOpacity = (card: string) =>
     card === 'Universal' || card === parallelChoice ? null : 'opacity-25';
-  const [isOpen, setPopoverOpen] = useState(false);
+  const [, setPopoverOpen] = useState(false);
 
-  const triggerRef = useRef(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   return (
-    <div className=" flex  h-full flex-col justify-center px-6  pb-8 pt-10">
+    <div className=" flex  h-full flex-col justify-center px-6  pb-8 pt-8">
       <div className="w-full">
         <FilterPanel cards={cards} setVisibleCards={setVisibleCards} />
       </div>
@@ -298,7 +286,6 @@ export const CardList = (props: CardListProps) => {
               <Popover
                 isOpen={hoverEnabled && hoveredIndex === index}
                 onOpenChange={(newState) => {
-                  console.log('New state:', newState, 'Current index:', index);
                   if (newState) {
                     setHoveredIndex(index);
                   } else {

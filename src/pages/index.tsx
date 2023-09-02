@@ -12,7 +12,7 @@ import { deckAtom, isMobile, paragonAtom, parallelChoiceAtom } from '~/lib/atoms
 import type { Cards, Paragons } from '~/types/sharedTypes';
 import { DeckImport } from '~/components/DeckImport';
 import { Footer } from '~/components/Footer';
-import { Moon, RotateCcw, Sun, Upload } from 'lucide-react';
+import { Moon, RotateCcw, Sun } from 'lucide-react';
 
 export const getStaticProps = async () => {
   const definedEndpoint = 'https://api.defined.fi';
@@ -235,7 +235,7 @@ export const Home = (props: HomeProps) => {
   const setActiveParagon = useSetAtom(paragonAtom);
   const setDeck = useSetAtom(deckAtom);
   const mobile = useAtomValue(isMobile);
-  const [openImport, setOpenImport] = useState(false);
+  const [openImport] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
@@ -282,7 +282,7 @@ export const Home = (props: HomeProps) => {
           type="font/woff2"
         />
       </Head>
-      <main className=" flex h-screen min-h-screen min-w-full flex-col items-center overflow-hidden bg-surface">
+      <main className="flex h-screen min-h-screen min-w-full flex-col items-center overflow-hidden bg-surface font-sans">
         <div className="flex h-16 w-full items-center justify-start border-b-2 border-border p-4">
           <h1 className="text-3xl font-bold tracking-tight">
             Deck

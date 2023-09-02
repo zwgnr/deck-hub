@@ -15,14 +15,10 @@ import {
   paragonAtom,
   parallelChoiceAtom,
   showDetailsAtom,
-  showStatsAtom,
 } from '~/lib/atoms';
 
 import { useCopyToClipboard } from '~/hooks/useCopyToClipboard';
-
-import { handleCardIcon } from '~/lib/handleCardIcon';
 import { formatText } from '~/lib/formatCardText';
-import { handleCardType } from '../lib/handleCardType';
 
 import { CopyAlert } from './CopyAlert';
 import { StatsToggle } from './interactions/StatsToggle';
@@ -43,7 +39,6 @@ import {
   PlusSquare,
 } from 'lucide-react';
 import { Popover, PopoverTrigger } from './base/popover';
-import { Button } from './base/button';
 import { Tooltip, TooltipTrigger } from './base/tooltip';
 import { CardTrigger } from './CardTrigger';
 import { CardContent } from './CardContent';
@@ -59,7 +54,6 @@ export const MyDeck = (props: DeckProps) => {
   const parallelChoice = useAtomValue(parallelChoiceAtom);
   const [activeParagon, setActiveParagon] = useAtom(paragonAtom);
   const [deck, setDeck] = useAtom(deckAtom);
-  const statsEnabled = useAtomValue(showStatsAtom);
   const hoverEnabled = useAtomValue(showDetailsAtom);
   const setDeckError = useSetAtom(deckErrorAtom);
   const [mobile, setMobile] = useAtom(isMobile);
@@ -446,9 +440,8 @@ export const MyDeck = (props: DeckProps) => {
       return handlePassive(result);
     }
   }
-  const [isOpen, setPopoverOpen] = useState(false);
+  const [, setPopoverOpen] = useState(false);
 
-  const triggerRef = useRef(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   return (
     <div className="flex h-full w-full flex-col gap-8 rounded-xl bg-surface-2 py-0 pl-0 shadow-lg xl:flex-row xl:gap-0 xl:py-8 xl:pl-8 ">
@@ -695,14 +688,12 @@ export const MyDeck = (props: DeckProps) => {
           ? null
           : sortedCards.map((card, index) =>
               mobile ? (
-                <div>
+                <div key={index}>
                   <PopoverTrigger>
                     <CardTrigger
                       card={card}
                       hoverEnabled={hoverEnabled}
-                      addToDeck={null}
                       setCardInfo={setCardInfo}
-                      getOpacity={null}
                       setPopoverOpen={setPopoverOpen}
                       setHoveredIndex={setHoveredIndex}
                       index={index}
@@ -719,7 +710,6 @@ export const MyDeck = (props: DeckProps) => {
                     <Popover
                       isOpen={hoverEnabled && hoveredIndex === index}
                       onOpenChange={(newState) => {
-                        console.log('New state:', newState, 'Current index:', index);
                         if (newState) {
                           setHoveredIndex(index);
                         } else {
@@ -737,16 +727,16 @@ export const MyDeck = (props: DeckProps) => {
                     </Popover>
                     <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
                       <button type="button" onClick={() => removeOne(index)}>
-                        <MinusSquare className="h-6 w-6 text-surface-3" />
+                        <MinusSquare className="h-6 w-6 fill-surface-4 text-surface-2" />
                       </button>
                       <button type="button" onClick={() => addOne(card)}>
-                        <PlusSquare className="h-6 w-6 text-surface-3" />
+                        <PlusSquare className="h-6 w-6 fill-surface-4 text-surface-2" />
                       </button>
                     </div>
                   </PopoverTrigger>
                 </div>
               ) : (
-                <div>
+                <div key={index}>
                   <TooltipTrigger
                     isOpen={hoverEnabled && hoveredIndex === index}
                     onOpenChange={(newState) => {
@@ -756,14 +746,11 @@ export const MyDeck = (props: DeckProps) => {
                         setHoveredIndex(null);
                       }
                     }}
-                    key={index}
                   >
                     <CardTrigger
                       card={card}
                       hoverEnabled={hoverEnabled}
-                      addToDeck={null}
                       setCardInfo={setCardInfo}
-                      getOpacity={null}
                       setPopoverOpen={setPopoverOpen}
                       setHoveredIndex={setHoveredIndex}
                       index={index}
@@ -790,10 +777,10 @@ export const MyDeck = (props: DeckProps) => {
                     </Tooltip>
                     <div className="flex w-full flex-row items-center justify-center gap-2 pt-1">
                       <button type="button" onClick={() => removeOne(index)}>
-                        <MinusSquare className="h-6 w-6 text-surface-3" />
+                        <MinusSquare className="h-6 w-6 fill-surface-4 text-surface-2" />
                       </button>
                       <button type="button" onClick={() => addOne(card)}>
-                        <PlusSquare className="h-6 w-6 text-surface-3" />
+                        <PlusSquare className="h-6 w-6 fill-surface-4 text-surface-2" />
                       </button>
                     </div>
                   </TooltipTrigger>

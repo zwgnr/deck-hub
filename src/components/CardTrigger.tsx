@@ -1,33 +1,40 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { Button } from './base/button';
 
-import Image from 'next/image';
 import { isMobile, showStatsAtom } from '~/lib/atoms';
 import { handleCardType } from '~/lib/handleCardType';
 import { Card } from '~/types/sharedTypes';
 import { handleCardIcon } from '~/lib/handleCardIcon';
-import clsx from 'clsx';
+import { Dispatch, ReactNode } from 'react';
 
-export const CardTrigger = ({
-  card,
-  hoverEnabled,
-  addToDeck,
-  setCardInfo,
-  getOpacity,
-  setPopoverOpen,
-  setHoveredIndex,
-  index,
-  children,
-}) => {
+export interface CardTriggerProps {
+  card: Card;
+  hoverEnabled: boolean;
+  addToDeck?: (card: Card) => void;
+  setCardInfo: (card: Card) => void;
+  getOpacity?: (card: string) => null | string;
+  setPopoverOpen: Dispatch<React.SetStateAction<boolean>>;
+  setHoveredIndex: Dispatch<React.SetStateAction<number | null>>;
+  index: number;
+  children: ReactNode;
+}
+
+export const CardTrigger = (props: CardTriggerProps) => {
+  const {
+    card,
+    hoverEnabled,
+    addToDeck,
+    setCardInfo,
+    setPopoverOpen,
+    setHoveredIndex,
+    index,
+    children,
+  } = props;
   const statsEnabled = useAtomValue(showStatsAtom);
-  const [mobile, setMobile] = useAtom(isMobile);
+  const [mobile] = useAtom(isMobile);
   return (
     <div
-      className={
-        mobile || addToDeck === null
-          ? 'relative  h-36 w-24 '
-          : 'relative h-60 w-40 '
-      }
+      className={mobile || addToDeck === undefined ? 'relative  h-36 w-24 ' : 'relative h-60 w-40 '}
     >
       {statsEnabled ? (
         <>
@@ -60,13 +67,13 @@ export const CardTrigger = ({
             setHoveredIndex(index);
             setPopoverOpen(true);
           } else {
-            addToDeck === null ? null : addToDeck(card);
+            addToDeck === null ? null : addToDeck !== undefined ? addToDeck(card) : null;
           }
         }}
         intent="secondary"
-        className="h-full w-full p-0 bg-transparent"
+        className="h-full w-full bg-transparent p-0 data-[hovered]:bg-transparent"
       >
-        {({ isPressed, isHovered }) => (
+        {({ isHovered }) => (
           <>
             {!mobile && isHovered && setCardInfo(card)}
             {children}

@@ -191,7 +191,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
         aria-labelledby="filter-heading"
         className="relative z-10 grid items-center"
       >
-        <div className="flex w-full items-center justify-between pb-8">
+        <div className="flex w-full items-center justify-between pb-6">
           <h2 id="filter-heading" className="sr-only">
             Filters
           </h2>
@@ -250,7 +250,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -280,7 +280,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -312,7 +312,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -340,7 +340,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-400' : 'bg-neutral-200 dark:bg-neutral-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
                           'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
@@ -370,8 +370,8 @@ export const FilterPanel = (props: FilterPanelProps) => {
                         defaultValue={option.value}
                         type="checkbox"
                         className={clsx(
-                          option.checked ? 'text-lime-500' : 'bg-neutral-200 dark:bg-neutral-500',
-                          'h-4 w-4 flex-shrink-0 rounded border-0 outline-none  ring-current  focus:ring-0 focus:ring-offset-0  focus-visible:ring-4 focus-visible:ring-blue-500',
+                          option.checked ? 'text-primary' : 'bg-surface-3',
+                          'h-4 w-4 flex-shrink-0 rounded border-0 outline-none ring-current focus:ring-0 focus:ring-offset-0 focus-visible:ring-4 focus-visible:ring-blue-500',
                         )}
                         checked={option.checked}
                         defaultChecked={option.checked}

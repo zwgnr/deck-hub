@@ -2,9 +2,15 @@ import { useAtom } from 'jotai';
 import Image from 'next/image';
 import { isMobile } from '~/lib/atoms';
 import { formatText } from '~/lib/formatCardText';
+import { Card } from '~/types/sharedTypes';
 
-export const CardContent = ({cardInfo}) => {
-  const [mobile, setMobile] = useAtom(isMobile);
+interface CardContentProps {
+  cardInfo?: Card;
+}
+
+export const CardContent = (props: CardContentProps) => {
+  const { cardInfo } = props;
+  const [mobile] = useAtom(isMobile);
   return (
     <div className="flex h-full w-full space-x-4">
       {mobile ? null : (

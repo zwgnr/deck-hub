@@ -1,4 +1,4 @@
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import { useState } from 'react';
 
 import {
   deckAtom,
@@ -10,7 +10,7 @@ import {
 import { useSetAtom } from 'jotai';
 import { useRef } from 'react';
 import type { Card, Cards, Paragons } from '~/types/sharedTypes';
-import { Check, Upload, X } from 'lucide-react';
+import { Check, Upload } from 'lucide-react';
 import { Button } from './base/button';
 import { DialogContent, DialogModal, DialogTrigger } from './base/dialog';
 import { Heading } from 'react-aria-components';
@@ -212,7 +212,7 @@ export const DeckImport = (props: DeckImportProps) => {
       </Button>
       <DialogModal>
         <DialogContent>
-          {({ close }) => (
+          {() => (
             <>
               <Check className="h-8 w-8 text-green-500" />
               <Heading className="text-lg font-bold">Import Deck Code</Heading>
