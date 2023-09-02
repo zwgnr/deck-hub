@@ -2,7 +2,7 @@ export type Card = {
   tokenId: string;
   name: string;
   lastPriceNetworkBaseToken: string;
-  lastPriceUsd?: string
+  lastPriceUsd?: string;
   media: {
     image: string;
     thumbSm: string;

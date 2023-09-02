@@ -15,11 +15,9 @@ import clsx from 'clsx';
 import { type FilterOptions, filterOptions } from '~/lib/filterOptions';
 
 import type { Card, Cards } from '~/types/sharedTypes';
-import { ChevronDown, Filter, PanelRightClose } from 'lucide-react';
+import { ChevronDown, Filter } from 'lucide-react';
 import { MenuContent, MenuItem, MenuTrigger } from './base/menu';
 import { Button } from './base/button';
-import { showCardList } from '~/lib/atoms';
-import { useAtom } from 'jotai';
 
 export interface FilterPanelProps {
   cards: Cards;
