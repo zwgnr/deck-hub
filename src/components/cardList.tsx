@@ -5,7 +5,7 @@ import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
-import * as Popover from '@radix-ui/react-popover';
+//import * as Popover from '@radix-ui/react-popover';
 
 import { type Card, type Cards } from '~/types/sharedTypes';
 
@@ -27,6 +27,9 @@ import { handleCardType } from '../lib/handleCardType';
 import { FilterPanel } from './FilterPanel';
 import { Tooltip, TooltipTrigger } from './base/tooltip';
 import { Button } from './base/button';
+import { CardTrigger } from './CardTrigger';
+import { CardContent } from './CardContent';
+import { Popover, PopoverTrigger } from './base/popover';
 
 export interface CardListProps {
   cards: Cards;
@@ -257,6 +260,7 @@ export const CardList = (props: CardListProps) => {
   const getOpacity = (card: string) =>
     card === 'Universal' || card === parallelChoice ? null : 'opacity-25';
   const [isOpen, setPopoverOpen] = useState(false);
+
   const triggerRef = useRef(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   return (
@@ -264,131 +268,95 @@ export const CardList = (props: CardListProps) => {
       <div className="w-full">
         <FilterPanel cards={cards} setVisibleCards={setVisibleCards} />
       </div>
-      <div className="flex h-full flex-wrap justify-center gap-2 xl:overflow-y-auto">
-        {visibleCards.map((card: Card, index) => (
-          <TooltipTrigger
-            trigger={mobile && hoverEnabled ? 'focus' : undefined}
-            isOpen={hoverEnabled && isOpen && hoveredIndex === index}
-            onOpenChange={(newState) => {
-              setPopoverOpen(true);
-              if (newState) {
-                setHoveredIndex(index);
-              } else {
-                setHoveredIndex(null);
-              }
-            }}
-            key={index}
-          >
-            <div className="relative h-60 w-40">
-              {statsEnabled ? (
-                <>
-                  <div className="absolute right-16 top-0  flex items-center justify-center text-gray-300">
-                    {handleCardType(card.gameData.cardType)}
-                  </div>
-                  <div className=" absolute right-2 top-2  flex items-center justify-center px-1 text-white">
-                    <p>{card.gameData.cost}</p>
-                  </div>
-                </>
-              ) : null}
-              {card.gameData.cardType === 'Unit' && statsEnabled ? (
-                <>
-                  <div className="absolute bottom-10 left-2 flex items-center justify-center px-1 text-white">
-                    <p>{card.gameData.attack}</p>
-                  </div>
-                  <div className="absolute bottom-10 right-16 flex items-center justify-center px-1  text-gray-200">
-                    {handleCardIcon(card.gameData.functionText)}
-                  </div>
-                  <div className="absolute bottom-10 right-2 flex items-center justify-center px-1  text-white">
-                    <p>{card.gameData.health}</p>
-                  </div>
-                </>
-              ) : null}
-
-              <Button
-                onPress={() => (mobile && hoverEnabled ? setPopoverOpen(true) : addToDeck(card))}
-                intent="secondary"
-                className="h-full w-full p-0"
+      <div className="flex h-full w-full flex-wrap justify-center gap-2 xl:overflow-y-auto">
+        {visibleCards.map((card: Card, index) =>
+          mobile ? (
+            <PopoverTrigger>
+              <CardTrigger
+                card={card}
+                hoverEnabled={hoverEnabled}
+                addToDeck={addToDeck}
+                setCardInfo={setCardInfo}
+                getOpacity={getOpacity}
+                setPopoverOpen={setPopoverOpen}
+                setHoveredIndex={setHoveredIndex}
+                index={index}
               >
-                {({ isPressed, isHovered }) => (
-                  <>
-                    {isHovered && setCardInfo(card)}
-                    <Image
-                      // src={getImg(card.parallel, card.title, card.slug)}
-                      src={card.media.image}
-                      alt="card"
-                      className={clsx(
-                        getOpacity(card.gameData.parallel),
-                        'h-full w-full rounded-md',
-                      )}
-                      // quality={100}
-                      height={72}
-                      width={200}
-                      // fill
-                      style={{ objectFit: 'cover' }}
-                    />
-                  </>
-                )}
-              </Button>
-            </div>
+                <Image
+                  // src={getImg(card.parallel, card.title, card.slug)}
+                  src={card.media.image}
+                  alt="card"
+                  className={clsx(getOpacity(card.gameData.parallel), 'h-full w-full rounded-md')}
+                  // quality={100}
+                  height={72}
+                  width={200}
+                  // fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </CardTrigger>
 
-            <Tooltip
-              className={clsx(
-                'z-50 h-[300px] w-[600px]  xl:h-[400px] xl:w-[600px]',
-                ' rounded-xl p-4',
-                ' bg-neutral-500 shadow-2xl shadow-black dark:bg-slate-800',
-                'focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75',
-              )}
+              <Popover
+                isOpen={hoverEnabled && hoveredIndex === index}
+                onOpenChange={(newState) => {
+                  console.log('New state:', newState, 'Current index:', index);
+                  if (newState) {
+                    setHoveredIndex(index);
+                  } else {
+                    setHoveredIndex(null);
+                  }
+                }}
+                className={
+                  'z-50 h-[300px] w-3/4 rounded-xl bg-neutral-500 p-4 shadow-2xl shadow-black focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-slate-800'
+                }
+              >
+                <CardContent cardInfo={cardInfo} />
+              </Popover>
+            </PopoverTrigger>
+          ) : (
+            <TooltipTrigger
+              isOpen={hoverEnabled && hoveredIndex === index}
+              onOpenChange={(newState) => {
+                if (newState) {
+                  setHoveredIndex(index);
+                } else {
+                  setHoveredIndex(null);
+                }
+              }}
+              key={index}
             >
-              <div className="flex h-full w-full space-x-4">
-                {mobile ? null : (
-                  <div className="flex w-1/2 items-center justify-center py-4">
-                    <div className="h-72 w-56 py-2 xl:h-96 xl:w-64">
-                      <Image
-                        // src={getImg(card.parallel, card.title, card.slug)}
-                        src={cardInfo?.media.image ?? ''}
-                        alt="card"
-                        className="h-full w-full rounded-md"
-                        // quality={100}
-                        height={72}
-                        width={200}
-                        // fill
-                        style={{ objectFit: 'cover' }}
-                      />
-                    </div>
-                  </div>
-                )}
-                <div className="flex h-full flex-col justify-between py-4">
-                  <div className="flex flex-col gap-2">
-                    <h1 className="text-3xl font-bold text-gray-100 dark:text-gray-100">
-                      {cardInfo?.name}
-                    </h1>
-                    <h2 className="mb-4 text-xl font-medium text-gray-900 dark:text-gray-500">
-                      {cardInfo?.gameData.cardType}
-                    </h2>
-                  </div>
-                  <div className="p-y overflow-y-auto text-sm font-normal text-gray-100 dark:text-gray-400">
-                    {formatText(cardInfo?.gameData.functionText ?? '')}
-                  </div>
-                  <div className=" flex flex-col gap-2">
-                    <div>
-                      <p className="text-lg font-medium text-gray-100 dark:text-gray-100">
-                        Energy: {cardInfo?.gameData.cost}
-                      </p>
-                    </div>
-                    <div className="flex flex-row gap-6">
-                      <p className="text-lg font-medium text-gray-100 dark:text-gray-100">
-                        Attack: {cardInfo?.gameData.attack}
-                      </p>
-                      <p className="text-lg font-medium text-gray-100 dark:text-gray-100">
-                        Health: {cardInfo?.gameData.health}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Tooltip>
-          </TooltipTrigger>
-        ))}
+              <CardTrigger
+                card={card}
+                hoverEnabled={hoverEnabled}
+                addToDeck={addToDeck}
+                setCardInfo={setCardInfo}
+                getOpacity={getOpacity}
+                setPopoverOpen={setPopoverOpen}
+                setHoveredIndex={setHoveredIndex}
+                index={index}
+              >
+                <Image
+                  // src={getImg(card.parallel, card.title, card.slug)}
+                  src={card.media.image}
+                  alt="card"
+                  className={clsx(getOpacity(card.gameData.parallel), 'h-full w-full rounded-md')}
+                  // quality={100}
+                  height={72}
+                  width={200}
+                  // fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </CardTrigger>
+
+              <Tooltip
+                className={
+                  'z-50 h-[300px] w-[600px] rounded-xl bg-neutral-500 p-4 shadow-2xl shadow-black focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75 dark:bg-slate-800 xl:h-[400px] xl:w-[600px]'
+                }
+              >
+                <CardContent cardInfo={cardInfo} />
+              </Tooltip>
+            </TooltipTrigger>
+          ),
+        )}
       </div>
     </div>
   );
