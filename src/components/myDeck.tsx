@@ -451,17 +451,17 @@ export const MyDeck = (props: DeckProps) => {
   const triggerRef = useRef(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   return (
-    <div className="flex h-full w-full flex-col gap-8 rounded-xl border-2 border-border py-0 pl-0 shadow-lg xl:flex-row xl:gap-0 xl:py-8 xl:pl-8 ">
+    <div className="flex h-full w-full flex-col gap-8 rounded-xl bg-surface-2 py-0 pl-0 shadow-lg xl:flex-row xl:gap-0 xl:py-8 xl:pl-8 ">
       <AddToDeckErrorMessage />
       <ImportErrorMessage />
       <AddToDeckSuccess />
       <CopyAlert text={deckCode} showAlert={showAlert} setShowAlert={setShowAlert} />
-      <div className=" flex h-fit w-full flex-col items-start justify-center overflow-hidden rounded-xl border-2 border-border xl:h-full xl:w-2/6 ">
+      <div className=" flex h-fit w-full flex-col items-start justify-center overflow-hidden rounded-xl bg-surface xl:h-full xl:w-2/6 ">
         <div className="flex w-full justify-center p-2">
           <p className="text-lg font-bold">Paragon</p>
         </div>
 
-        <div className="flex h-56 w-full overflow-hidden  xl:h-2/5">
+        <div className="flex h-56 w-full overflow-hidden xl:h-2/5">
           {mobile ? (
             <RadixPopover.Root>
               <div className="relative flex h-full w-full">

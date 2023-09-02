@@ -290,12 +290,7 @@ export const Home = (props: HomeProps) => {
           </h1>
 
           <div className="absolute right-8 flex gap-4">
-            <DeckImport
-              openImport={openImport}
-              setOpenImport={setOpenImport}
-              cards={cards}
-              paragons={paragons}
-            />
+            <DeckImport openImport={openImport} cards={cards} paragons={paragons} />
             <button
               onClick={handleStartOver}
               title="Start Over"
@@ -333,7 +328,7 @@ export const Home = (props: HomeProps) => {
             <div className="flex w-full flex-col gap-2 xl:w-3/5 ">
               <MyDeck cards={cards} paragons={paragons} />
             </div>
-            <div className="w-full rounded-xl border-2 border-border shadow-lg dark:border-transparent  xl:w-2/5 ">
+            <div className="w-full rounded-xl  bg-surface-2 shadow-lg xl:w-2/5 ">
               {parallelChoice === '' ? <ParallelPicker /> : <CardList cards={cards} />}
             </div>
           </div>

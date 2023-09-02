@@ -1,28 +1,33 @@
-import { type Dispatch, type SetStateAction } from 'react';
+import { useState, type Dispatch, type SetStateAction } from 'react';
 
-import { deckAtom, parallelChoiceAtom, paragonAtom, importErrorAtom } from '~/lib/atoms';
+import {
+  deckAtom,
+  parallelChoiceAtom,
+  paragonAtom,
+  importErrorAtom,
+  atdSuccessAtom,
+} from '~/lib/atoms';
 import { useSetAtom } from 'jotai';
 import { useRef } from 'react';
 import type { Card, Cards, Paragons } from '~/types/sharedTypes';
-import { Check, Upload } from 'lucide-react';
+import { Check, Upload, X } from 'lucide-react';
 import { Button } from './base/button';
 import { DialogContent, DialogModal, DialogTrigger } from './base/dialog';
 import { Heading } from 'react-aria-components';
 
 export interface DeckImportProps {
   openImport: boolean;
-  setOpenImport: Dispatch<SetStateAction<boolean>>;
   cards: Cards;
   paragons: Paragons;
 }
 
 export const DeckImport = (props: DeckImportProps) => {
-  const { openImport, setOpenImport, cards, paragons } = props;
-
+  const { cards, paragons } = props;
+  const [isImported, setIsImported] = useState(false);
   const setParallelChoice = useSetAtom(parallelChoiceAtom);
   const setActiveParagon = useSetAtom(paragonAtom);
   const setImportError = useSetAtom(importErrorAtom);
-
+  const setSuccess = useSetAtom(atdSuccessAtom);
   const setDeck = useSetAtom(deckAtom);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -51,7 +56,8 @@ export const DeckImport = (props: DeckImportProps) => {
   const handleDeckDode = () => {
     try {
       const deckCode = textareaRef.current?.value;
-      const trimmedDeckCode = deckCode?.trim();
+      const upperCase = deckCode?.toUpperCase();
+      const trimmedDeckCode = upperCase?.trim();
       const deckCodeArr: string[] = trimmedDeckCode?.split(',') ?? [];
 
       const paragonIds = paragons.map((paragon) => paragon.id);
@@ -155,8 +161,12 @@ export const DeckImport = (props: DeckImportProps) => {
       });
 
       setDeck(newArray);
-
-      setOpenImport(false);
+      setIsImported(true);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        setIsImported(false);
+      }, 1000);
     } catch (error: unknown) {
       const errorCodeString = (error as Error).message;
       setParallelChoice('');
@@ -193,12 +203,11 @@ export const DeckImport = (props: DeckImportProps) => {
         }));
       }, 4000);
     }
-    setOpenImport(false);
   };
 
   return (
-    <DialogTrigger>
-      <Button intent="secondary" className="rounded-lg p-2">
+    <DialogTrigger isOpen={isImported}>
+      <Button onPress={() => setIsImported(true)} intent="secondary" className="rounded-lg p-2">
         <Upload className="h-6 w-6" />
       </Button>
       <DialogModal>
@@ -220,13 +229,16 @@ export const DeckImport = (props: DeckImportProps) => {
                       rows={4}
                       name="deckCode"
                       id="deckCode"
-                      className="block w-full rounded-md border-gray-300 bg-surface-2 shadow-sm ring-transparent focus:border-transparent focus:outline-transparent focus:ring-2  focus:ring-primary dark:focus:outline-transparent sm:text-sm"
+                      className="block w-full rounded-md border-gray-300 bg-surface shadow-sm ring-transparent focus:border-transparent focus:outline-transparent focus:ring-2  focus:ring-primary dark:focus:outline-transparent sm:text-sm"
                       defaultValue=""
                     />
                   </div>
                 </label>
               </div>
               <Button onPress={() => handleDeckDode()}>Import</Button>
+              <Button onPress={() => setIsImported(false)} intent="secondary">
+                Close
+              </Button>
             </>
           )}
         </DialogContent>
