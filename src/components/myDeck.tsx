@@ -660,7 +660,7 @@ export const MyDeck = (props: DeckProps) => {
               type="button"
               title="Clear Deck"
               onClick={() => setDeck([])}
-              className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
+              className="rounded-md bg-surface-3 p-2 text-fg-4 hover:bg-surface-4"
             >
               <XCircle className="h-6 w-6" />
             </button>{' '}
@@ -680,14 +680,14 @@ export const MyDeck = (props: DeckProps) => {
                   console.error('Error in async function:', error);
                 });
               }}
-              className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
+              className="rounded-md bg-surface-3 p-2 text-fg-4 hover:bg-surface-4"
             >
               <Download className="h-6 w-6" />
             </button>
             <button
-            title="Expand/Toggle Card List"
+              title="Expand/Toggle Card List"
               onClick={() => setShowCardList(!cardListVisible)}
-              className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
+              className="rounded-md bg-surface-3 p-2 text-fg-4 hover:bg-surface-4"
             >
               <Expand className="h-6 w-6" />
             </button>

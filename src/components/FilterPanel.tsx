@@ -220,7 +220,7 @@ export const FilterPanel = (props: FilterPanelProps) => {
             </div>
           </div>
           <MenuTrigger>
-            <Button intent="secondary" className="gap-2">
+            <Button className="gap-2 bg-surface-3 text-fg data-[hovered]:bg-surface-4">
               <p>Sort</p> <ChevronDown />
             </Button>
 
