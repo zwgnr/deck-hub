@@ -73,3 +73,5 @@ export const importErrorAtom = atom<ImportError>({
 });
 
 export const isMobile = atom(true);
+
+export const showCardList = atom(false);

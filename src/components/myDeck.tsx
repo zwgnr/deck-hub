@@ -14,6 +14,7 @@ import {
   isMobile,
   paragonAtom,
   parallelChoiceAtom,
+  showCardList,
   showDetailsAtom,
 } from '~/lib/atoms';
 
@@ -34,9 +35,10 @@ import {
   ArrowLeftCircle,
   ArrowRightCircle,
   Download,
-  Eraser,
+  Expand,
   MinusSquare,
   PlusSquare,
+  XCircle,
 } from 'lucide-react';
 import { Popover, PopoverTrigger } from './base/popover';
 import { Tooltip, TooltipTrigger } from './base/tooltip';
@@ -61,7 +63,7 @@ export const MyDeck = (props: DeckProps) => {
   const [cardInfo, setCardInfo] = useState(cards[0]);
   const [deckCode, setDeckCode] = useState('');
   const [showAlert, setShowAlert] = useState<boolean>(false);
-
+  const [cardListVisible, setShowCardList] = useAtom(showCardList);
   const { copyToClipboard } = useCopyToClipboard();
 
   useEffect(() => {
@@ -660,7 +662,7 @@ export const MyDeck = (props: DeckProps) => {
               onClick={() => setDeck([])}
               className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
             >
-              <Eraser className="h-6 w-6" />
+              <XCircle className="h-6 w-6" />
             </button>{' '}
             <button
               type="button"
@@ -681,6 +683,13 @@ export const MyDeck = (props: DeckProps) => {
               className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
             >
               <Download className="h-6 w-6" />
+            </button>
+            <button
+            title="Expand/Toggle Card List"
+              onClick={() => setShowCardList(!cardListVisible)}
+              className="rounded-md bg-secondary p-2 text-secondary-fg hover:bg-secondary/60"
+            >
+              <Expand className="h-6 w-6" />
             </button>
           </div>
         </div>
@@ -758,7 +767,7 @@ export const MyDeck = (props: DeckProps) => {
                       <Image
                         src={card.media.image}
                         alt="card"
-                        className="  h-24 w-16  rounded-md bg-slate-700 p-0"
+                        className="h-24 w-16 rounded-md bg-slate-700 p-0"
                         fill
                         sizes="50vw"
                         style={{ objectFit: 'cover' }}

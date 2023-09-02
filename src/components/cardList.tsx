@@ -21,6 +21,7 @@ import { Tooltip, TooltipTrigger } from './base/tooltip';
 import { CardTrigger } from './CardTrigger';
 import { CardContent } from './CardContent';
 import { Popover, PopoverTrigger } from './base/popover';
+import { PanelRightClose } from 'lucide-react';
 
 export interface CardListProps {
   cards: Cards;

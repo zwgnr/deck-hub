@@ -7,12 +7,13 @@ import { CardList } from '~/components/cardList';
 import { MyDeck } from '~/components/myDeck';
 import { ParallelPicker } from '~/components/parallelPicker';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { deckAtom, isMobile, paragonAtom, parallelChoiceAtom } from '~/lib/atoms';
+import { deckAtom, isMobile, paragonAtom, parallelChoiceAtom, showCardList } from '~/lib/atoms';
 
 import type { Cards, Paragons } from '~/types/sharedTypes';
 import { DeckImport } from '~/components/DeckImport';
 import { Footer } from '~/components/Footer';
-import { Moon, RotateCcw, Sun } from 'lucide-react';
+import { ListRestart, Moon, Sun } from 'lucide-react';
+import clsx from 'clsx';
 
 export const getStaticProps = async () => {
   const definedEndpoint = 'https://api.defined.fi';
@@ -239,7 +240,7 @@ export const Home = (props: HomeProps) => {
   const mobile = useAtomValue(isMobile);
   const [openImport] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-
+  const cardListVisible = useAtomValue(showCardList);
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -299,7 +300,7 @@ export const Home = (props: HomeProps) => {
               className="rounded-lg bg-secondary p-2 text-secondary-fg hover:bg-secondary/60 sm:block"
               type="button"
             >
-              <RotateCcw className="h-6 w-6" />
+              <ListRestart className="h-6 w-6" />
             </button>
             {!mobile ? (
               <button
@@ -327,10 +328,20 @@ export const Home = (props: HomeProps) => {
         </div>
         <div className="flex w-screen flex-col overflow-auto ">
           <div className="flex h-full flex-col  gap-4 p-8 pb-0 xl:flex-row">
-            <div className="flex w-full flex-col gap-2 xl:w-3/5 ">
+            <div
+              className={clsx(
+                'flex w-full flex-col gap-2  ',
+                cardListVisible ? 'xl:w-full' : 'xl:w-3/5',
+              )}
+            >
               <MyDeck cards={cards} paragons={paragons} />
             </div>
-            <div className="w-full rounded-xl  bg-surface-2 shadow-lg xl:w-2/5 ">
+            <div
+              className={clsx(
+                'w-full rounded-xl  bg-surface-2 shadow-lg xl:w-2/5 ',
+                cardListVisible ? 'hidden' : 'block',
+              )}
+            >
               {parallelChoice === '' ? <ParallelPicker /> : <CardList cards={cards} />}
             </div>
           </div>
