@@ -16,12 +16,12 @@ import { ListRestart, Moon, Sun } from 'lucide-react';
 import clsx from 'clsx';
 
 export const getStaticProps = async () => {
-  const definedEndpoint = 'https://api.defined.fi';
+  const definedEndpoint = 'https://graph.defined.fi/graphql';
   const definedAPIKey = process.env.DEFINED ?? '';
 
   const definedHeaders = {
     'Content-Type': 'application/json',
-    'x-api-key': definedAPIKey,
+    Authorization: definedAPIKey,
   };
 
   const cardCollectionQuery = gql`
